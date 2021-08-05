@@ -7,6 +7,7 @@
 # include <sys/time.h>//gettimeofday
 #include <pthread.h>//pthread
 
+
 typedef struct s_data
 {
 	int				p_num;
@@ -14,6 +15,8 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
+	pthread_mutex_t	*mutex;
+	pthread_t 		*philos;
 	struct timeval	i_time;
 }				t_data;
 
@@ -22,5 +25,6 @@ int		ft_check_arg(int argc, char **argv);
 void	ft_asing_arg(t_data *dat, int argc, char **argv);
 //FT_LIBFT_C
 long	ft_atoi(const char *str);
+void	ft_end_of_program(t_data *dat) __has_attribute__ ((destructor));
 
 #endif
