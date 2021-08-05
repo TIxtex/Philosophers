@@ -2,7 +2,7 @@
 
 void	*ft_pthread_handler(void *arg)
 {
-	printf("Hola, soy el filosofo nºx\n");
+	write(STDOUT_FILENO, "Hola\n", 5);
 	(void) arg;
 	return (NULL);
 }

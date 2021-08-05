@@ -11,7 +11,8 @@ int	main(int argc, char **argv)
 		return (-1);
 	if (ft_thread_create(&dat))
 		return (-1);
-	//Aqui ya estan los hilos creados y unidos poner bucle;
+	while (1)
+		sleep(0);
 	return (0);
 }
 

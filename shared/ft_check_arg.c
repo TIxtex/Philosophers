@@ -3,13 +3,13 @@
 void	ft_asing_arg(t_data *dat, int argc, char **argv)
 {
 	dat->p_num = (int)ft_atoi(argv[1]);
-	dat->p_num = (int)ft_atoi(argv[2]);
-	dat->p_num = (int)ft_atoi(argv[3]);
-	dat->p_num = (int)ft_atoi(argv[4]);
+	dat->time_to_death = (int)ft_atoi(argv[2]);
+	dat->time_to_eat = (int)ft_atoi(argv[3]);
+	dat->time_to_sleep = (int)ft_atoi(argv[4]);
 	if (6 == argc)
-		dat->p_num = (int)ft_atoi(argv[5]);
+		dat->must_eat = (int)ft_atoi(argv[5]);
 	else
-		dat->p_num = -1;
+		dat->must_eat = -1;
 }
 
 static int	ft_check_argv(char *argv)
