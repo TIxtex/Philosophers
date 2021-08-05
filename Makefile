@@ -1,6 +1,6 @@
 NAME = philo
 SOURCESH = shared/ft_libft.c shared/ft_check_arg.c
-SOURCESM = mandatory/ft_mutex.c
+SOURCESM = mandatory/ft_mutex.c mandatory/ft_pthread.c
 MAIN = mandatory/main.c
 COMPILER = gcc
 FLAGS = -Wall -Wextra -Werror
@@ -12,7 +12,6 @@ $(NAME): $(SOURCESC)
 	$(COMPILER) $(FLAGS) $(SOURCESH) $(SOURCESM) $(MAIN) $(THR) -o $(NAME)
 all: $(NAME)
 clean:
-	/bin/rm -rf $(OBJECTS)
 fclean: clean
 	/bin/rm -rf $(NAME)
 f: fclean
