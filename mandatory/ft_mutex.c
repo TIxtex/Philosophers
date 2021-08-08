@@ -18,19 +18,27 @@ int	ft_mutex_create(t_data *dat)
 	return (0);
 }
 
-int	ft_thread_create(t_data *dat)
+int	ft_thread_create(t_data *dat, t_philo *philos)
 {
 	int	i;
 
 	i = -1;
-	dat->philo = (pthread_t *)malloc(dat->p_num * sizeof(pthread_t));
-	if (NULL == dat->philo)
+	philos = (t_philo *)malloc(dat->p_num * sizeof(t_philo));
+	if (NULL == philos)
 		return (1);
+	write(1, "OK\n", 3);
 	while (++i < dat->p_num)
-		if (0 != pthread_create(&dat->philo[i], NULL, &ft_pthread_handler, dat))
+	{
+		philos[i].philo_id = i + 1;
+		philos[i].dat = dat;
+		if (0 != pthread_create(&philos[i].philo,
+				NULL, &ft_pthread_handler, (void *)&philos[i]))
 			return (1);
+	}
 	while (--i >= 0)
-		if (0 != pthread_join(dat->philo[i], NULL))
+	{
+		if (0 != pthread_join(philos[i].philo, NULL))
 			return (1);
+	}
 	return (0);
 }

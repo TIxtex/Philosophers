@@ -15,9 +15,15 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				must_eat;
 	pthread_mutex_t	*mutex;
-	pthread_t		*philo;
 	struct timeval	i_time;
-}				t_data;
+}					t_data;
+
+typedef struct s_philo
+{
+	pthread_t		philo;
+	int				philo_id;
+	t_data			*dat;
+}					t_philo;
 
 //FT_CHECK_ARG_C
 int		ft_check_arg(int argc, char **argv);
@@ -26,8 +32,8 @@ void	ft_asing_arg(t_data *dat, int argc, char **argv);
 long	ft_atoi(const char *str);
 void	ft_end_of_program(t_data *dat) __attribute__ ((destructor));
 //FT_MUTEX_C
-int	ft_mutex_create(t_data *dat);
-int ft_thread_create(t_data *dat);
+int		ft_mutex_create(t_data *dat);
+int		ft_thread_create(t_data *dat, t_philo *philos);
 //FT_PTHREAD_C
 void	*ft_pthread_handler(void *arg);
 
