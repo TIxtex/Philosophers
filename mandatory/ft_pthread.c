@@ -47,7 +47,7 @@ void	*ft_eat(t_philo *philo)
 		else
 			ft_take_forks(philo, philo->philo_id - 1, philo->philo_id);
 	}
-	printf("%d is eating\n", philo->philo_id);
+	printf("%d	-	%d is eating\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
 	ft_wait_time(philo, philo->dat->time_to_eat);
 	if (philo->philo_id % 2)//impar
 	{
