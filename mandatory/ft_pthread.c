@@ -1,7 +1,8 @@
 #include "../philosofers.h"
 
-float	ft_time_diff(struct timespec *start, struct timespec *end){
-	return (end->tv_sec - start->tv_sec) + 1e-9*(end->tv_nsec - start->tv_nsec);
+float ft_time_diff(struct timeval *start, struct timeval *end)
+{
+	return (end->tv_sec - start->tv_sec) + 1e-6*(end->tv_usec - start->tv_usec);
 }
 
 void	ft_wait_time(t_philo *philo, int time_wait)
@@ -95,7 +96,7 @@ void	*ft_pthread_handler(void *arg)
 	int			i = 0;
 
 	philo = (t_philo *)arg;
-	gettimeofday(philo->dat->i_time, NULL);
+	gettimeofday(&philo->dat->i_time, NULL);
 	while (i++ < 3)
 	{
 		ft_eat(philo);
