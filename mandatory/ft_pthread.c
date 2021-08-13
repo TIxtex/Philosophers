@@ -17,7 +17,7 @@ void	*ft_take_forks(t_philo *philo, int first, int second)
 	printf("%d	-	%d has taken a fork\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
 	if (pthread_mutex_lock(&philo->dat->mutex[second]))
 		return (NULL);
-	printf("%d has taken a fork\n", philo->philo_id);
+	printf("%d	-	%d has taken a fork\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
 	return (NULL);
 }
 
@@ -68,19 +68,19 @@ void	*ft_eat(t_philo *philo)
 
 void	ft_slepping(t_philo *philo)
 {
-	printf("%d is sleeping\n", philo->philo_id);
+	printf("%d	-	%d is sleeping\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
 	ft_wait_time(philo, philo->dat->time_to_sleep);
 }
 
 void	ft_thinking(t_philo *philo)
 {
-	printf("%d is thinking\n", philo->philo_id);
+	printf("%d	-	%d is thinking\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
 	ft_wait_time(philo, philo->dat->time_to_death);
 }
 
 void	ft_dead(t_philo *philo)
 {
-	printf("%d died\n", philo->philo_id);
+	printf("%d	-	%d died\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
 //	pthread_detach(dat->philos[dat->philos->philo_id - 1].philo);
 }
 
