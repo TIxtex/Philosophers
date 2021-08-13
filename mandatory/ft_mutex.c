@@ -26,7 +26,6 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 	philos = (t_philo *)malloc(dat->p_num * sizeof(t_philo));
 	if (NULL == philos)
 		return (1);
-	write(1, "OK\n", 3);
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;
@@ -35,6 +34,7 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 				NULL, &ft_pthread_handler, (void *)&philos[i]))
 			return (1);
 	}
+	gettimeofday(philos->dat->i_time, NULL);
 	while (--i >= 0)
 	{
 		if (0 != pthread_join(philos[i].philo, NULL))

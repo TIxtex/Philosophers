@@ -16,6 +16,7 @@ typedef struct s_data
 	int				must_eat;
 	pthread_mutex_t	*mutex;
 	struct timeval	i_time;
+	struct timeval	aux_time;
 }					t_data;
 
 typedef struct s_philo
@@ -36,5 +37,5 @@ int		ft_mutex_create(t_data *dat);
 int		ft_thread_create(t_data *dat, t_philo *philos);
 //FT_PTHREAD_C
 void	*ft_pthread_handler(void *arg);
-
+//void	ft_wait_time();
 #endif

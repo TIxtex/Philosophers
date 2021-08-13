@@ -1,10 +1,20 @@
 #include "../philosofers.h"
 
+void	ft_wait_time(t_philo *philo, int time_wait)
+{
+	struct timeval	time_now;
+	gettimeofday(&time_now, NULL);
+	gettimeofday(philo->dat->aux_time, NULL);
+	philo->dat->aux_time.tv_usec =+ time_wait - 1;//
+	while (philo->dat->aux_time.tv_usec > time_now.tv_usec)
+		gettimeofday(&time_now, NULL);
+}
+
 void	*ft_take_forks(t_philo *philo, int first, int second)
 {
 	if (pthread_mutex_lock(&philo->dat->mutex[first]))
 		return (NULL);
-	printf("%d has taken a fork\n", philo->philo_id);
+	printf("%d	-	%d has taken a fork\n", philo->dat->i_time, philo->philo_id);
 	if (pthread_mutex_lock(&philo->dat->mutex[second]))
 		return (NULL);
 	printf("%d has taken a fork\n", philo->philo_id);
@@ -38,7 +48,7 @@ void	*ft_eat(t_philo *philo)
 			ft_take_forks(philo, philo->philo_id - 1, philo->philo_id);
 	}
 	printf("%d is eating\n", philo->philo_id);
-	usleep(philo->dat->time_to_eat);
+	ft_wait_time(philo, philo->dat->time_to_eat);
 	if (philo->philo_id % 2)//impar
 	{
 		if (philo->philo_id == philo->dat->p_num)
@@ -59,13 +69,13 @@ void	*ft_eat(t_philo *philo)
 void	ft_slepping(t_philo *philo)
 {
 	printf("%d is sleeping\n", philo->philo_id);
-	usleep(philo->dat->time_to_sleep);
+	ft_wait_time(philo, philo->dat->time_to_sleep);
 }
 
 void	ft_thinking(t_philo *philo)
 {
 	printf("%d is thinking\n", philo->philo_id);
-	usleep(philo->dat->time_to_death);
+	ft_wait_time(philo, philo->dat->time_to_death);
 }
 
 void	ft_dead(t_philo *philo)

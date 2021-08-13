@@ -11,6 +11,7 @@ int	main(int argc, char **argv)
 	if (ft_mutex_create(&dat))
 		return (-1);
 	philos = NULL;
+	
 	if (ft_thread_create(&dat, philos))
 		return (-1);
 	while (1)
