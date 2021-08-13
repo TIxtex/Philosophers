@@ -3,6 +3,7 @@
 void	ft_wait_time(t_philo *philo, int time_wait)
 {
 	struct timeval	time_now;
+
 	gettimeofday(&time_now, NULL);
 	gettimeofday(&philo->dat->aux_time, NULL);
 	philo->dat->aux_time.tv_usec =+ time_wait - 1;//
@@ -90,6 +91,7 @@ void	*ft_pthread_handler(void *arg)
 	int			i = 0;
 
 	philo = (t_philo *)arg;
+	gettimeofday(philo->dat->i_time, NULL);
 	while (i++ < 3)
 	{
 		ft_eat(philo);
