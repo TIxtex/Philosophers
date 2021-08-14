@@ -1,5 +1,10 @@
 #include "../philosofers.h"
 
+void	ft_dead_check(t_philo *philo)
+{
+
+}
+
 void	*ft_eat(t_philo *philo)
 {
 	if (philo->philo_id % 2)//impar

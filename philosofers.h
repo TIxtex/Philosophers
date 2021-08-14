@@ -17,6 +17,7 @@ typedef struct s_data
 	pthread_mutex_t	*mutex;
 	struct timeval	i_time;
 	struct timeval	aux_time;
+	int				dead;
 }					t_data;
 
 typedef struct s_philo
