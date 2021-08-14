@@ -39,10 +39,11 @@ void	*ft_eat(t_philo *philo)
 void	*ft_pthread_handler(void *arg)
 {
 	t_philo		*philo;
-	int			i = 0;
+	int			i;
 
 	philo = (t_philo *)arg;
-	while (i++ < 3)
+	i = 0;
+	while (-1 == philo->dat->must_eat || i++ < philo->dat->must_eat)
 	{
 		ft_eat(philo);
 		ft_slepping(philo);
