@@ -10,8 +10,8 @@ void	ft_wait_time(t_philo *philo, int time_wait)
 	struct timeval	time_now;
 
 	gettimeofday(&time_now, NULL);
-	philo->dat->aux_time->tv_sec = time_now->tv_sec;
-	philo->dat->aux_time->tv_usec = time_now->tv_usec;
-	while (time_wait > ft_time_diff(philo->dat->aux_time, time_now))
+	philo->dat->aux_time->tv_sec = time_now.tv_sec;
+	philo->dat->aux_time->tv_usec = time_now.tv_usec;
+	while (time_wait > ft_time_diff(&philo->dat->aux_time, &time_now))
 		gettimeofday(&time_now, NULL);
 }
