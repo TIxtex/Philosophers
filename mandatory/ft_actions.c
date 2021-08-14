@@ -3,13 +3,13 @@
 void	ft_slepping(t_philo *philo)
 {
 	printf("%f	-	%d is sleeping\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
-	ft_wait_time(philo, philo->dat->time_to_sleep);
+	philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, ft_traslate_usec(philo->dat->time_to_sleep));
 }
 
 void	ft_thinking(t_philo *philo)
 {
 	printf("%f	-	%d is thinking\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
-	ft_wait_time(philo, philo->dat->time_to_death);
+	philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, ft_traslate_usec(philo->dat->time_to_death));
 }
 
 void	ft_dead(t_philo *philo)

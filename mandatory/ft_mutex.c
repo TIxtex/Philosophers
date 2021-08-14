@@ -35,6 +35,7 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 			return (1);
 	}
 	gettimeofday(&philos->dat->i_time, NULL);
+	philos->dat->aux_time = philos->dat->i_time;
 	while (--i >= 0)
 	{
 		if (0 != pthread_join(philos[i].philo, NULL))
