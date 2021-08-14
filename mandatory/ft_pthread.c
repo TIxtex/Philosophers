@@ -1,8 +1,16 @@
 #include "../philosofers.h"
 
+int		ft_jamelgo(t_philo *philo)
+{
+	
+}
+
 void	ft_dead_check(t_philo *philo)
 {
-
+	if (philo->dat->dead)
+		pthread_detach(philo->philo[philo->philo_id]);
+	/*ver si se ha quedado jamelgo*/
+	printf("%f	-	%d died\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
 }
 
 void	*ft_eat(t_philo *philo)
@@ -16,7 +24,7 @@ void	*ft_eat(t_philo *philo)
 	}
 	else
 	{
-//		philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, ft_traslate_usec(200));
+//		philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, ft_traslate_usec(200));// tiempo de espera para los pares creo que es necesario, veremos en las pruebas finales
 		if (philo->philo_id == philo->dat->p_num)
 			ft_take_forks(philo, 0, philo->philo_id - 1);
 		else
@@ -54,6 +62,5 @@ void	*ft_pthread_handler(void *arg)
 		ft_slepping(philo);
 		ft_thinking(philo);
 	}
-	ft_dead(philo);
 	return (NULL);
 }
