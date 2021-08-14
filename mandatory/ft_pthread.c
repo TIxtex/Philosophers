@@ -1,41 +1,5 @@
 #include "../philosofers.h"
 
-float ft_time_diff(struct timeval *start, struct timeval *end)
-{
-	return (end->tv_sec - start->tv_sec) + 1e-6*(end->tv_usec - start->tv_usec);
-}
-
-void	ft_wait_time(t_philo *philo, int time_wait)
-{
-	struct timeval	time_now;
-
-	gettimeofday(&time_now, NULL);
-	gettimeofday(&philo->dat->aux_time, NULL);
-	philo->dat->aux_time.tv_usec =+ time_wait - 1;//
-	while (0 >= ft_time_diff(time_now, philo->dat->aux_time))
-		gettimeofday(&time_now, NULL);
-}
-
-void	*ft_take_forks(t_philo *philo, int first, int second)
-{
-	if (pthread_mutex_lock(&philo->dat->mutex[first]))
-		return (NULL);
-	printf("%d	-	%d has taken a fork\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
-	if (pthread_mutex_lock(&philo->dat->mutex[second]))
-		return (NULL);
-	printf("%d	-	%d has taken a fork\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
-	return (NULL);
-}
-
-void	*ft_leave_forks(t_philo *philo, int first, int second)
-{
-	if (pthread_mutex_unlock(&philo->dat->mutex[first]))
-		return (NULL);
-	if (pthread_mutex_unlock(&philo->dat->mutex[second]))
-		return (NULL);
-	return (NULL);
-}
-
 void	*ft_eat(t_philo *philo)
 {
 	if (philo->philo_id % 2)//impar
@@ -53,7 +17,7 @@ void	*ft_eat(t_philo *philo)
 		else
 			ft_take_forks(philo, philo->philo_id - 1, philo->philo_id);
 	}
-	printf("%d	-	%d is eating\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
+	printf("%d	-	%d is eating\n", ft_time_diff(philo->dat->i_time, philo->dat->aux_time),, philo->philo_id);
 	ft_wait_time(philo, philo->dat->time_to_eat);
 	if (philo->philo_id % 2)//impar
 	{
@@ -70,24 +34,6 @@ void	*ft_eat(t_philo *philo)
 			ft_leave_forks(philo, philo->philo_id - 1, philo->philo_id);
 	}
 	return (NULL);
-}
-
-void	ft_slepping(t_philo *philo)
-{
-	printf("%d	-	%d is sleeping\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
-	ft_wait_time(philo, philo->dat->time_to_sleep);
-}
-
-void	ft_thinking(t_philo *philo)
-{
-	printf("%d	-	%d is thinking\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
-	ft_wait_time(philo, philo->dat->time_to_death);
-}
-
-void	ft_dead(t_philo *philo)
-{
-	printf("%d	-	%d died\n", philo->dat->aux_time.tv_usec - philo->dat->i_time.tv_usec, philo->philo_id);
-//	pthread_detach(dat->philos[dat->philos->philo_id - 1].philo);
 }
 
 void	*ft_pthread_handler(void *arg)

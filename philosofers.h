@@ -37,5 +37,14 @@ int		ft_mutex_create(t_data *dat);
 int		ft_thread_create(t_data *dat, t_philo *philos);
 //FT_PTHREAD_C
 void	*ft_pthread_handler(void *arg);
+//FT_ACTIONS_C
+void	ft_slepping(t_philo *philo);
+void	ft_thinking(t_philo *philo);
+void	ft_dead(t_philo *philo);
+void	*ft_take_forks(t_philo *philo, int first, int second);
+void	*ft_leave_forks(t_philo *philo, int first, int second);
+//FT_TIME_C
+double	ft_time_diff(struct timeval *start, struct timeval *end);
+void	ft_wait_time(t_philo *philo, int time_wait);
 
 #endif

@@ -1,6 +1,7 @@
 NAME = philo
 SOURCESH = shared/ft_libft.c shared/ft_check_arg.c
-SOURCESM = mandatory/ft_mutex.c mandatory/ft_pthread.c
+SOURCESM = mandatory/ft_mutex.c mandatory/ft_pthread.c mandatory/ft_actions.c \
+	mandatory/ft_time.c
 MAIN = mandatory/main.c
 COMPILER = gcc
 FLAGS = -Wall -Wextra -Werror
