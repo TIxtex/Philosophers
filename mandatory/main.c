@@ -13,6 +13,7 @@ int	main(int argc, char **argv)
 	philos = NULL;
 	if (ft_thread_create(&dat, philos))
 		return (-1);
+	sleep(2);
 	while (0 == dat.dead)
 		sleep(1);
 	printf("Fin de la ejecución\n");/**/
