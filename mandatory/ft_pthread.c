@@ -10,13 +10,20 @@ int		ft_starve_together(t_philo *philo)
 void	ft_dead_check(t_philo *philo)
 {
 	philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, 0);//refress aux_time
+//	printf("-->Debug deadcheck philo:%d time to init:%f\n", philo->philo_id, ft_time_diff(&philo->last_eat, &philo->dat->aux_time));
 	if (philo->dat->dead)
-		pthread_detach(&philo->philo[philo->philo_id]);
+	{
+//		pthread_detach(philo->philo);
+		pthread_join(philo->philo, NULL);
+		printf("Detach el hilo %d con la dirección:%p	\n", philo->philo_id - 1, (void *)&philo->philo);
+	}
 	if (ft_starve_together(philo))
 	{
 		philo->dat->dead = 1;
 		printf("%f	-	%d died\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
-		pthread_detach(&philo->philo[philo->philo_id]);
+//		pthread_detach(philo->philo);
+		pthread_join(philo->philo, NULL);
+		printf("Detach el hilo %d con la dirección:%p	\n", philo->philo_id - 1, (void *)&philo->philo);
 	}
 }
 
@@ -68,7 +75,6 @@ void	*ft_pthread_handler(void *arg)
 	while (-1 == philo->dat->must_eat || i++ < philo->dat->must_eat)
 	{
 		ft_eat(philo);//no puede comer si esta muerto
-
 		ft_slepping(philo);//esto lo va a hacer si o si if no ha muerto nadie
 		ft_thinking(philo);//aqui no hace nada, simplemente espera por los palillos if no ha muerto nadie
 	}
