@@ -15,6 +15,7 @@ int	ft_dead_check(t_philo *philo)
 	else if (ft_starve_together(philo))
 	{
 		philo->dat->dead = 1;
+		printf("%f	-	%d died\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
 		return (0);
 	}
 	return (1);
