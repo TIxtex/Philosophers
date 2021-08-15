@@ -7,24 +7,17 @@ int		ft_starve_together(t_philo *philo)
 	return (0);
 }
 
-void	ft_dead_check(t_philo *philo)
+int	ft_dead_check(t_philo *philo)
 {
 	philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, 0);//refress aux_time
-//	printf("-->Debug deadcheck philo:%d time to init:%f\n", philo->philo_id, ft_time_diff(&philo->last_eat, &philo->dat->aux_time));
 	if (philo->dat->dead)
-	{
-//		pthread_detach(philo->philo);
-		pthread_join(philo->philo, NULL);
-		printf("Detach el hilo %d con la dirección:%p	\n", philo->philo_id - 1, (void *)&philo->philo);
-	}
-	if (ft_starve_together(philo))
+		return (0);
+	else if (ft_starve_together(philo))
 	{
 		philo->dat->dead = 1;
-		printf("%f	-	%d died\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
-//		pthread_detach(philo->philo);
-		pthread_join(philo->philo, NULL);
-		printf("Detach el hilo %d con la dirección:%p	\n", philo->philo_id - 1, (void *)&philo->philo);
+		return (0);
 	}
+	return (1);
 }
 
 void	*ft_eat(t_philo *philo)
@@ -44,8 +37,8 @@ void	*ft_eat(t_philo *philo)
 		else
 			ft_take_forks(philo, philo->philo_id - 1, philo->philo_id);
 	}
-	ft_dead_check(philo);
-	printf("%f	-	%d is eating\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
+	if (ft_dead_check(philo))
+		printf("%f	-	%d is eating\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
 	philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, ft_traslate_usec(philo->dat->time_to_eat));
 	philo->last_eat = philo->dat->aux_time;
 	if (philo->philo_id % 2)//impar

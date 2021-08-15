@@ -41,7 +41,7 @@ void		*ft_pthread_handler(void *arg);
 //FT_ACTIONS_C
 void		ft_slepping(t_philo *philo);
 void		ft_thinking(t_philo *philo);
-void		ft_dead_check(t_philo *philo);
+int			ft_dead_check(t_philo *philo);
 void		*ft_take_forks(t_philo *philo, int first, int second);
 void		*ft_leave_forks(t_philo *philo, int first, int second);
 //FT_TIME_C

@@ -40,9 +40,6 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 	{
 		philos[i].last_eat = philos->dat->aux_time;
 		pthread_detach(philos[i].philo);
-		printf("Uno el hilo %d con la dirección:%p	\n", i, (void *)&philos[i].philo);
-	//	if (0 != pthread_join(philos[i].philo, NULL))
-	//		return (1);
 	}
 	return (0);
 }
