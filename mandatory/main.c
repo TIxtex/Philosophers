@@ -13,7 +13,7 @@ int	main(int argc, char **argv)
 	philos = NULL;
 	if (ft_thread_create(&dat, philos))
 		return (-1);
-	while (!dat->dead)
+	while (!dat.dead)
 		sleep(0);
 	printf("Fin de la ejecución\n");/**/
 	free(dat.mutex);
