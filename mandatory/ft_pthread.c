@@ -32,7 +32,7 @@ void	*ft_eat(t_philo *philo)
 	}
 	else
 	{
-//		philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, ft_traslate_usec(200));// tiempo de espera para los pares creo que es necesario, veremos en las pruebas finales
+		usleep(10);// tiempo de espera para los pares creo que es necesario, veremos en las pruebas finales
 		if (philo->philo_id == philo->dat->p_num)
 			ft_take_forks(philo, 0, philo->philo_id - 1);
 		else
@@ -72,5 +72,6 @@ void	*ft_pthread_handler(void *arg)
 		ft_slepping(philo);//esto lo va a hacer si o si if no ha muerto nadie
 		ft_thinking(philo);//aqui no hace nada, simplemente espera por los palillos if no ha muerto nadie
 	}
+
 	return (NULL);
 }
