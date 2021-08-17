@@ -55,12 +55,13 @@ void	*ft_pthread_handler(void *arg)
 
 	philo = (t_philo *)arg;
 	i = 0;
+	philo->last_eat = philo->dat->aux_time;
 	while (-1 == philo->dat->must_eat || i++ < philo->dat->must_eat)
 	{
 		ft_eat(philo);//no puede comer si esta muerto
 		ft_slepping(philo);//esto lo va a hacer si o si if no ha muerto nadie
 		ft_thinking(philo);//aqui no hace nada, simplemente espera por los palillos if no ha muerto nadie
 	}
-	
+
 	return (NULL);
 }
