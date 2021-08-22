@@ -61,6 +61,6 @@ void	*ft_pthread_handler(void *arg)
 		ft_slepping(philo);//esto lo va a hacer si o si if no ha muerto nadie
 		ft_thinking(philo);//aqui no hace nada, simplemente espera por los palillos if no ha muerto nadie
 	}
-
+	printf("Fin de las comidas\n");
 	return (NULL);
 }
