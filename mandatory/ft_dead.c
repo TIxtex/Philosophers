@@ -4,6 +4,7 @@ int	ft_starve(t_philo *philo)
 {
 	if (ft_traslate_usec(philo->dat->time_to_death) < ft_time_diff(&philo->last_eat, &philo->aux_time))
 		return (1);
+	printf("\n->%f\n\n");
 	return (0);
 }
 
