@@ -44,7 +44,7 @@ void			ft_thinking(t_philo *philo);
 void			*ft_take_forks(t_philo *philo, int first, int second);
 void			*ft_leave_forks(t_philo *philo, int first, int second);
 //FT_TIME_C
-double			ft_time_diff(struct timeval *start, struct timeval *end);
+double			ft_time_diff(struct timeval start, struct timeval end);
 struct timeval	ft_wait_time(struct timeval time, double time_wait);
 double			ft_traslate_usec(int usec);
 //FT_DEAD_C
