@@ -38,6 +38,6 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 			return (1);
 	}
 	while (--i >= 0)
-		pthread_detach(philos[i].philo);
+		pthread_join(&philos[i].philo, NULL);
 	return (0);
 }
