@@ -41,9 +41,9 @@ void	*ft_eat(t_philo *philo)
 {
 	ft_take_phase(philo);
 	if (ft_dead_check(philo))
-		printf("%f	-	%d is eating\n", ft_time_diff(&philo->dat->i_time, &philo->dat->aux_time), philo->philo_id);
-	philo->dat->aux_time = ft_wait_time(philo->dat->aux_time, ft_traslate_usec(philo->dat->time_to_eat));
-	philo->last_eat = philo->dat->aux_time;
+		printf("%f	-	%d is eating\n", ft_time_diff(&philo->dat->i_time, &philo->aux_time), philo->philo_id);
+	philo->aux_time = ft_wait_time(philo->aux_time, ft_traslate_usec(philo->dat->time_to_eat));
+	philo->last_eat = philo->aux_time;
 	ft_leave_phase(philo);
 	return (NULL);
 }

@@ -27,12 +27,12 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 	if (NULL == philos)
 		return (1);
 	gettimeofday(&dat->i_time, NULL);
-	dat->aux_time = dat->i_time;
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;
 		philos[i].dat = dat;
-		philos[i].last_eat = dat->aux_time;
+		philos[i].aux_time = dat->i_time;
+		philos[i].last_eat = dat->i_time;
 		if (0 != pthread_create(&philos[i].philo,
 				NULL, &ft_pthread_handler, (void *)&philos[i]))
 			return (1);
