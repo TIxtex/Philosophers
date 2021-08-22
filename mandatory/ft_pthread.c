@@ -55,7 +55,6 @@ void	*ft_pthread_handler(void *arg)
 
 	philo = (t_philo *)arg;
 	i = 0;
-	 philo->last_eat = philo->dat->aux_time;
 	while (-1 == philo->dat->must_eat || i++ < philo->dat->must_eat)
 	{
 		ft_eat(philo);//no puede comer si esta muerto
