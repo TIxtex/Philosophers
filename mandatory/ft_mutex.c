@@ -37,7 +37,11 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 				NULL, &ft_pthread_handler, (void *)&philos[i]))
 			return (1);
 	}
+	i = 1;
+	while(i)
+		i = ft_patrol(philos);
+	i = philos->dat->p_num;
 	while (--i >= 0)
-		pthread_join(philos[i].philo, NULL);
+		pthread_join(philos[i].philo, NULL);*/
 	return (0);
 }

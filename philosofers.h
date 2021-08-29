@@ -28,6 +28,7 @@ typedef struct s_philo
 	t_data			*dat;
 }					t_philo;
 
+int				ft_patrol(t_philo *philos);
 //FT_CHECK_ARG_C
 int				ft_check_arg(int argc, char **argv);
 void			ft_asing_arg(t_data *dat, int argc, char **argv);
