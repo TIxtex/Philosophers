@@ -1,18 +1,19 @@
 NAME = philo
-SOURCESH = shared/ft_libft.c shared/ft_check_arg.c shared/ft_time.c
-SOURCESM = mandatory/ft_mutex.c mandatory/ft_pthread.c mandatory/ft_actions.c\
-	mandatory/ft_dead.c
-MAIN = mandatory/main.c
+SOURCES = ft_libft.c ft_check_arg.c ft_time.c ft_dead.c\
+	ft_mutex.c ft_pthread.c ft_actions.c main.c
+OBJECT = $(SOURCES:.c=.o)
 COMPILER = gcc
 FLAGS = -Wall -Wextra -Werror
 THR = -lpthread
 
 .PHONY: all clean fclean f re
 
-$(NAME): $(SOURCESC)
-	$(COMPILER) $(FLAGS) $(SOURCESH) $(SOURCESM) $(MAIN) $(THR) -o $(NAME)
 all: $(NAME)
+$(NAME): $(SOURCES)
+	$(COMPILER) $(FLAGS) -c $(SOURCES)
+	$(COMPILER) $(OBJECT) $(THR) -o $(NAME)
 clean:
+	/bin/rm -rf $(OBJECT)
 fclean: clean
 	/bin/rm -rf $(NAME)
 f: fclean

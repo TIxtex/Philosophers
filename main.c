@@ -1,4 +1,4 @@
-#include "../philosofers.h"
+#include "philosofers.h"
 
 int	main(int argc, char **argv)
 {
@@ -28,7 +28,7 @@ int	ft_patrol(t_philo *philos)
 	i = 0;
 	while (i++ < philos->dat->p_num)
 	{
-		if (ft_traslate_usec(philos->dat->time_to_death) < ft_time_diff(philo[i].last_eat, philo[i].aux_time))
+		if (ft_traslate_usec(philos->dat->time_to_death) < ft_time_diff(philos[i].last_eat, philos[i].aux_time))
 			return (0);
 	}
 	return (1);

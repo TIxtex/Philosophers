@@ -1,4 +1,4 @@
-#include "../philosofers.h"
+#include "philosofers.h"
 
 void	ft_asing_arg(t_data *dat, int argc, char **argv)
 {

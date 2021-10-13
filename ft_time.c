@@ -1,4 +1,4 @@
-#include "../philosofers.h"
+#include "philosofers.h"
 
 double	ft_traslate_usec(int usec)
 {

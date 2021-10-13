@@ -1,4 +1,4 @@
-#include "../philosofers.h"
+#include "philosofers.h"
 
 int	ft_starve(t_philo *philo)
 {

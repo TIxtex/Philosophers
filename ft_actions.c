@@ -1,4 +1,4 @@
-#include "../philosofers.h"
+#include "philosofers.h"
 
 void	ft_slepping(t_philo *philo)
 {
