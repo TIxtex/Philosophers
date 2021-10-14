@@ -14,11 +14,11 @@ int	ft_starve(t_philo *philo)
 int	ft_dead_check(t_philo *philo)
 {
 
-	if (philo->dat->dead)
+	if (philo->dead)
 		return (0);
 	else if (ft_starve(philo))
 	{
-		philo->dat->dead = 1;
+		philo->dead = 1;
 		printf("%f	-	%d died\n", ft_time_diff(philo->dat->i_time, philo->aux_time), philo->philo_id);
 		return (0);
 	}

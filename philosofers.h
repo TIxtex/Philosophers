@@ -16,7 +16,6 @@ typedef struct s_data
 	int				must_eat;
 	pthread_mutex_t	*mutex;
 	struct timeval	i_time;
-	int				dead;
 }					t_data;
 
 typedef struct s_philo
@@ -25,6 +24,7 @@ typedef struct s_philo
 	int				philo_id;
 	struct timeval	aux_time;
 	struct timeval	last_eat;
+	int				dead;
 	t_data			*dat;
 }					t_philo;
 

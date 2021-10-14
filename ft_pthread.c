@@ -37,7 +37,7 @@ void	ft_leave_phase(t_philo *philo)
 	}
 }
 
-void	*ft_eat(t_philo *philo)
+void	ft_eat(t_philo *philo)
 {
 	ft_take_phase(philo);
 	if (ft_dead_check(philo))
@@ -45,7 +45,6 @@ void	*ft_eat(t_philo *philo)
 	philo->aux_time = ft_wait_time(philo->aux_time, ft_traslate_usec(philo->dat->time_to_eat));
 	philo->last_eat = philo->aux_time;
 	ft_leave_phase(philo);
-	return (NULL);
 }
 
 void	*ft_pthread_handler(void *arg)
@@ -61,6 +60,6 @@ void	*ft_pthread_handler(void *arg)
 		ft_slepping(philo);//esto lo va a hacer si o si if no ha muerto nadie
 		ft_thinking(philo);//aqui no hace nada, simplemente espera por los palillos if no ha muerto nadie
 	}
-	printf("Fin de las comidas\n");
+	printf("%d - Fin de las comidas\n", philo->philo_id);
 	return (NULL);
 }
