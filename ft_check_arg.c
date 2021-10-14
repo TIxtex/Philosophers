@@ -10,7 +10,6 @@ void	ft_asing_arg(t_data *dat, int argc, char **argv)
 		dat->must_eat = (int)ft_atoi(argv[5]);
 	else
 		dat->must_eat = -1;
-	dat->dead = 0;
 }
 
 static int	ft_check_argv(char *argv)

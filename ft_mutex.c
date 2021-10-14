@@ -31,6 +31,7 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 	{
 		philos[i].philo_id = i + 1;
 		philos[i].dat = dat;
+		philos[i].dead = 0;
 		philos[i].aux_time = dat->i_time;
 		philos[i].last_eat = dat->i_time;
 		if (0 != pthread_create(&philos[i].philo,
