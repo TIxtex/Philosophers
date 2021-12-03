@@ -29,6 +29,7 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 	if (NULL == philos)
 		return (1);
 	gettimeofday(&dat->i_time, NULL);
+	printf("Tiempo: sec=%d usec=%d\n", dat->i_time.tv_sec, dat->i_time.tv_usec);
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;
