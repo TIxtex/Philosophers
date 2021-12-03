@@ -49,6 +49,7 @@ void			ft_eat(t_philo *philo);
 double			ft_time_diff(struct timeval start, struct timeval end);
 struct timeval	ft_wait_time(struct timeval time, double time_wait);
 double			ft_usec(int sec);
+double			ft_sec(double usec);
 //FT_DEAD_C
 int				ft_starve(t_philo *philo);
 int				ft_dead_check(t_philo *philo);

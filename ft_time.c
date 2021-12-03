@@ -5,6 +5,11 @@ double	ft_usec(int sec)
 	return (1e-6 * sec);
 }
 
+double	ft_sec(double usec)
+{
+	return (1e6 * usec);
+}
+
 double	ft_time_diff(struct timeval start, struct timeval end)
 {
 	return ((end.tv_sec - start.tv_sec)
@@ -35,7 +40,7 @@ struct timeval	ft_wait_time(struct timeval time, double time_wait)
 	while (time_wait > ft_time_diff(time_init, time_now))
 		gettimeofday(&time_now, NULL);
 	time_now.tv_sec = 0;
-	time_now.tv_usec = time_wait;
+	time_now.tv_usec = ft_sec(time_wait);
 	time_now = ft_time_add(time_init, time_now);//
 
 	return (time_now);
