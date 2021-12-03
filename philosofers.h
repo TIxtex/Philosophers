@@ -29,7 +29,7 @@ typedef struct s_philo
 	t_data			*dat;
 }					t_philo;
 
-int				ft_patrol(t_philo *philos);
+void			ft_patrol(t_philo *philos);
 //FT_CHECK_ARG_C
 int				ft_check_arg(int argc, char **argv);
 void			ft_asing_arg(t_data *dat, int argc, char **argv);
@@ -43,8 +43,8 @@ void			*ft_pthread_handler(void *arg);
 //FT_ACTIONS_C
 void			ft_slepping(t_philo *philo);
 void			ft_thinking(t_philo *philo);
-void			*ft_take_forks(t_philo *philo, int first, int second);
-void			*ft_leave_forks(t_philo *philo, int first, int second);
+//FT_EAT_C
+void			ft_eat(t_philo *philo);
 //FT_TIME_C
 double			ft_time_diff(struct timeval start, struct timeval end);
 struct timeval	ft_wait_time(struct timeval time, double time_wait);

@@ -30,7 +30,7 @@ int		main(int argc, char **argv)
 		return (-1);
 //posible blucle de detuchs
 	printf("Fin de la ejecución\n");/**/
-	free(dat.mutex);
+	free(dat.fork_mutex);
 	free(philos);
 	return (0);
 }

@@ -9,7 +9,7 @@ int	ft_mutex_create(t_data *dat)
 		i = 1;
 	dat->fork_mutex = (pthread_mutex_t *)malloc(
 			(dat->p_num + i) * sizeof(pthread_mutex_t));
-	if (NULL == dat->mutex)
+	if (NULL == dat->fork_mutex)
 		return (1);
 	i += dat->p_num;
 	while (i-- > 0)
