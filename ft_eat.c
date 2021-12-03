@@ -57,7 +57,7 @@ void	ft_leave_phase(t_philo *philo)
 	else
 	{
 		if (philo->philo_id == philo->dat->p_num)
-			ft_leave_forks(philo, 0, philo->philo_id - 1);
+			ft_leave_forks(philo, philo->philo_id - 1, 0);
 		else
 			ft_leave_forks(philo, philo->philo_id - 1, philo->philo_id);
 	}
