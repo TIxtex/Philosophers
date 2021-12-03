@@ -2,6 +2,7 @@
 
 void	ft_asing_arg(t_data *dat, int argc, char **argv)
 {
+	dat->dead = 0;
 	dat->p_num = (int)ft_atoi(argv[1]);
 	dat->time_to_death = (int)ft_atoi(argv[2]);
 	dat->time_to_eat = (int)ft_atoi(argv[3]);

@@ -1,20 +1,22 @@
 #ifndef PHILOSOFERS_H
 # define PHILOSOFERS_H
-# include <unistd.h>//write(), usleep(),
-# include <stdio.h>//printf()
-# include <stdlib.h>//malloc()
-# include <string.h>//memset()
-# include <sys/time.h>//gettimeofday
-# include <pthread.h>//pthread
+# include <unistd.h>	//write(), usleep(),
+# include <stdio.h>		//printf()
+# include <stdlib.h>	//malloc()
+# include <string.h>	//memset()
+# include <sys/time.h>	//gettimeofday()
+# include <pthread.h>	//pthread()
 
 typedef struct s_data
 {
+	int				dead;
 	int				p_num;
 	int				time_to_death;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
-	pthread_mutex_t	*mutex;
+	pthread_mutex_t	*fork_mutex;
+	pthread_mutex_t	dead_mutex;
 	struct timeval	i_time;
 }					t_data;
 
@@ -24,7 +26,6 @@ typedef struct s_philo
 	int				philo_id;
 	struct timeval	aux_time;
 	struct timeval	last_eat;
-	int				dead;
 	t_data			*dat;
 }					t_philo;
 
@@ -47,9 +48,10 @@ void			*ft_leave_forks(t_philo *philo, int first, int second);
 //FT_TIME_C
 double			ft_time_diff(struct timeval start, struct timeval end);
 struct timeval	ft_wait_time(struct timeval time, double time_wait);
-double			ft_traslate_usec(int usec);
+double			ft_usec(int sec);
 //FT_DEAD_C
 int				ft_starve(t_philo *philo);
 int				ft_dead_check(t_philo *philo);
+int 			ft_dead_door(t_philo *philo);
 
 #endif

@@ -1,6 +1,7 @@
 NAME = philo
 SOURCES = ft_libft.c ft_check_arg.c ft_time.c ft_dead.c\
-	ft_mutex.c ft_pthread.c ft_actions.c main.c
+	ft_mutex.c ft_pthread.c ft_actions.c ft_eat.c\
+	main.c
 OBJECT = $(SOURCES:.c=.o)
 COMPILER = gcc
 FLAGS = -Wall -Wextra -Werror

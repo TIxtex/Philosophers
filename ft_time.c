@@ -1,8 +1,8 @@
 #include "philosofers.h"
 
-double	ft_traslate_usec(int usec)
+double	ft_usec(int sec)
 {
-	return (1e-6 * usec);
+	return (1e-6 * sec);
 }
 
 double	ft_time_diff(struct timeval start, struct timeval end)

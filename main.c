@@ -1,19 +1,21 @@
 #include "philosofers.h"
 
-int	ft_patrol(t_philo *philos)
+void	ft_patrol(t_philo *philos)
 {
 	int	i;
 
-	i = 0;
-	while (i++ < philos->dat->p_num)
+	i = 1;
+	while (i)
 	{
-		if (ft_traslate_usec(philos->dat->time_to_death) < ft_time_diff(philos[i].last_eat, philos[i].aux_time))
-			return (0);
+		sleep(1);
+		pthread_mutex_lock(&philo->dat.dead_mutex);
+		if (1 == philos->dat->dead)
+			i = 0;
+		pthread_mutex_unlock(&philo->dat.dead_mutex);
 	}
-	return (1);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_data	dat;
 	t_philo	*philos;
@@ -26,11 +28,9 @@ int	main(int argc, char **argv)
 	philos = NULL;
 	if (ft_thread_create(&dat, philos))
 		return (-1);
-	sleep(2);
-	while (ft_patrol(philos))
-		;
 //posible blucle de detuchs
 	printf("Fin de la ejecución\n");/**/
 	free(dat.mutex);
+	free(philos);
 	return (0);
 }
