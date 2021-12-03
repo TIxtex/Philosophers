@@ -37,7 +37,7 @@ void	ft_take_phase(t_philo *philo)
 	}
 	else
 	{
-//		usleep(10);// tiempo de espera para los pares creo que es necesario, veremos en las pruebas finales
+		usleep(10);// tiempo de espera para los pares creo que es necesario, veremos en las pruebas finales
 		if (philo->philo_id == philo->dat->p_num)
 			ft_take_forks(philo, 0, philo->philo_id - 1);
 		else
@@ -69,6 +69,6 @@ void	ft_eat(t_philo *philo)
 	if (ft_dead_check(philo))
 		printf("%f	-	%d is eating\n", ft_time_diff(philo->dat->i_time, philo->aux_time), philo->philo_id);
 	philo->aux_time = ft_wait_time(philo->aux_time, ft_usec(philo->dat->time_to_eat));//**//
-	philo->last_eat = philo->aux_time;
+	*philo->last_eat = *philo->aux_time;
 	ft_leave_phase(philo);
 }
