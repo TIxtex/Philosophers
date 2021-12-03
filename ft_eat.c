@@ -69,7 +69,7 @@ void	ft_eat(t_philo *philo)
 	if (ft_dead_check(philo))
 		printf("%f	-	%d is eating\n", ft_time_diff(philo->dat->i_time, philo->aux_time), philo->philo_id);
 	philo->aux_time = ft_wait_time(philo->aux_time, ft_usec(philo->dat->time_to_eat));//**//
-	philo->last_eat->tv_sec = philo->aux_time->tv_sec;
-	philo->last_eat->tv_usec = philo->aux_time->tv_usec;
+	philo->last_eat.tv_sec = philo->aux_time.tv_sec;
+	philo->last_eat.tv_usec = philo->aux_time.tv_usec;
 	ft_leave_phase(philo);
 }
