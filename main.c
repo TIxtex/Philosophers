@@ -8,10 +8,10 @@ void	ft_patrol(t_philo *philos)
 	while (i)
 	{
 		sleep(1);
-		pthread_mutex_lock(&philo->dat.dead_mutex);
+		pthread_mutex_lock(&philos->dat.dead_mutex);
 		if (1 == philos->dat->dead)
 			i = 0;
-		pthread_mutex_unlock(&philo->dat.dead_mutex);
+		pthread_mutex_unlock(&philos->dat.dead_mutex);
 	}
 }
 
