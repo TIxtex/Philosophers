@@ -39,7 +39,7 @@ void	ft_take_phase(t_philo *philo)
 	{
 		usleep(10);// tiempo de espera para los pares creo que es necesario, veremos en las pruebas finales
 		if (philo->philo_id == philo->dat->p_num)
-			ft_take_forks(philo, 0, philo->philo_id - 1);
+			ft_take_forks(philo, philo->philo_id - 1, 0);
 		else
 			ft_take_forks(philo, philo->philo_id - 1, philo->philo_id);
 	}
