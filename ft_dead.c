@@ -2,6 +2,7 @@
 
 int	ft_starve(t_philo *philo)
 {
+	gettimeofday(philo->aux_time, NULL);
 	if (ft_usec(philo->dat->time_to_death) < ft_time_diff(philo->last_eat, philo->aux_time))
 	{
 //		printf("SAMUELTOComprobacion de starveo del philo->%d:%f\n",philo->philo_id , ft_time_diff(philo->last_eat, philo->aux_time));

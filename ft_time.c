@@ -39,8 +39,5 @@ struct timeval	ft_wait_time(struct timeval time, double time_wait)
 	time_now = time;
 	while (time_wait > ft_time_diff(time_init, time_now))
 		gettimeofday(&time_now, NULL);
-	time_now.tv_sec = 0;
-	time_now.tv_usec = ft_sec(time_wait);
-	time_now = ft_time_add(time_init, time_now);//
 	return (time_now);
 }
