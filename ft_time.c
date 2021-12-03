@@ -21,7 +21,7 @@ struct timeval ft_time_add(struct timeval source, struct timeval add)
 	struct timeval	aux;
 
 	aux.tv_sec = source.tv_sec + add.tv_sec;
-	aux.tv_sec = source.tv_sec + add.tv_sec;
+	aux.tv_usec = source.tv_usec + add.tv_usec;
 	if (aux.tv_usec >= 1000000)
 	{
 		aux.tv_sec += 1;
@@ -42,6 +42,5 @@ struct timeval	ft_wait_time(struct timeval time, double time_wait)
 	time_now.tv_sec = 0;
 	time_now.tv_usec = ft_sec(time_wait);
 	time_now = ft_time_add(time_init, time_now);//
-
 	return (time_now);
 }
