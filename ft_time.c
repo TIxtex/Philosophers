@@ -1,33 +1,16 @@
 #include "philosofers.h"
 
-double	ft_usec(int sec)
+double	ft_time_diff(long long start, long long end)
 {
-	return (1e-6 * sec);
+	return (end - start);
 }
 
-double	ft_sec(double usec)
+long long ft_now_time(void)
 {
-	return (1e6 * usec);
-}
+	struct timeval	time;
 
-double	ft_time_diff(struct timeval start, struct timeval end)
-{
-	return ((end.tv_sec - start.tv_sec)
-		+ 1e-6 * (end.tv_usec - start.tv_usec));
-}
-
-struct timeval ft_time_add(struct timeval source, struct timeval add)
-{
-	struct timeval	aux;
-
-	aux.tv_sec = source.tv_sec + add.tv_sec;
-	aux.tv_usec = source.tv_usec + add.tv_usec;
-	if (aux.tv_usec >= 1000000)
-	{
-		aux.tv_sec += 1;
-		aux.tv_usec -= 1000000;
-	}
-	return (aux);
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
 struct timeval	ft_wait_time(struct timeval time, double time_wait)

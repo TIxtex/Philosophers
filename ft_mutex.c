@@ -16,7 +16,9 @@ int	ft_mutex_create(t_data *dat)
 		if (-1 == pthread_mutex_init(&dat->fork_mutex[i], NULL))
 			return (1);
 	if (-1 == pthread_mutex_init(&dat->dead_mutex, NULL))
-			return (1);
+		return (1);
+	if (-1 == pthread_mutex_init(&dat->write_mutex, NULL))
+		return (1);
 	return (0);
 }
 
@@ -28,24 +30,24 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 	philos = (t_philo *)malloc(dat->p_num * sizeof(t_philo));
 	if (NULL == philos)
 		return (1);
-	gettimeofday(&dat->i_time, NULL);
-	printf("Tiempo: sec=%ld usec=%d\n", dat->i_time.tv_sec, dat->i_time.tv_usec);
+	dat->philos = philos;
+	dat->i_time = ft_actual_time(void);
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;
 		philos[i].dat = dat;
-		philos[i].aux_time = dat->i_time;
-		philos[i].last_eat = dat->i_time;
+		
 		if (0 != pthread_create(&philos[i].philo,
 				NULL, &ft_pthread_handler, (void *)&philos[i]))
 			return (1);
+		else
+			philos[i].last_eat = ft_actual_time(void);
 	}
-	ft_patrol(philos);
+	ft_patrol(dat);
 /*
 	i = 1;
 	while (i)
-		
-	i = philos->dat->p_num;
+		i = philos->dat->p_num;
 	while (--i >= 0)
 		pthread_join(philos[i].philo, NULL);
 */
