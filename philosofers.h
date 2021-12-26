@@ -48,7 +48,7 @@ void			*ft_pthread_handler(void *arg);
 //FT_ACTIONS_C
 void			ft_slepping(t_philo *philo);
 void			ft_thinking(t_philo *philo);
-void			ft_write(t_philo philo, char *msg);
+void			ft_write(t_philo *philo, char *msg);
 //FT_EAT_C
 void			ft_eat(t_philo *philo);
 //FT_TIME_C

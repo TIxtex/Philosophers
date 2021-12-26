@@ -31,7 +31,7 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 	if (NULL == philos)
 		return (1);
 	dat->philos = philos;
-	dat->i_time = ft_now_time(void);
+	dat->i_time = ft_now_time();
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;

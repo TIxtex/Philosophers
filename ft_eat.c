@@ -5,7 +5,7 @@ void	*ft_take_forks(t_philo *philo, int first, int second)
 	if (pthread_mutex_lock(&philo->dat->fork_mutex[first]))
 		return (NULL);
 	if (ft_dead_door(philo))
-		ft_write(philo, "has taken a fork"):
+		ft_write(philo, "has taken a fork");
 	if (pthread_mutex_lock(&philo->dat->fork_mutex[second]))
 		return (NULL);
 	if (ft_dead_door(philo))

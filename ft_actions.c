@@ -3,9 +3,9 @@
 
 void	ft_write(t_philo *philo, char *msg)
 {
-	pthread_mutex_lock(philo->dat.write_mutex);
-	printf("%f	-	%d %s\n", ft_time_diff(philo->dat->i_time, ft_now_time()), philo->philo_id, msg);
-	pthread_mutex_unlock(philo->dat.write_mutex);
+	pthread_mutex_lock(&philo->dat->write_mutex);
+	printf("%lld	-	%d %s\n", ft_time_diff(philo->dat->i_time, ft_now_time()), philo->philo_id, msg);
+	pthread_mutex_unlock(&philo->dat->write_mutex);
 }
 
 void	ft_slepping(t_philo *philo)
