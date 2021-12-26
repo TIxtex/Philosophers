@@ -1,30 +1,25 @@
 #include "philosofers.h"
 
-int	ft_starve(t_data dat)
+void	ft_patrol(t_philo *philos)
 {
+	int	flag;
 	int	i;
 
-	i = -1;
-	while (++i < dat->p_num)
-		if (ft_usec(dat->time_to_death) < ft_time_diff(dat->philo[i]->last_eat, ft_actual_time()))
-			return (1);
-	return (0);
-}
-
-void	ft_patrol(t_data *dat)
-{
-	int	i;
-
-	i = 1;
-	while (i)
+	flag = 1;
+	while (flag)
 	{
-		sleep(1);
-		pthread_mutex_lock(&philos->dat->dead_mutex);
-		if (1 == philos->dat->dead)
-			i = 0;
-		else
-			ft_starve(dat);
-		pthread_mutex_unlock(&philos->dat->dead_mutex);
+		i = -1;
+		while (++i < philos->dat->p_num)
+		{
+			pthread_mutex_lock(&philos->dat->dead_mutex);
+			if (philos->dat->time_to_death <= ft_time_diff(philos[i].last_eat , ft_now_time()))
+			{
+				flag = 0;
+				philos->dat->dead = 1;
+				i = philos->dat->p_num;
+			}
+			pthread_mutex_unlock(&philos->dat->dead_mutex);
+		}
 	}
 }
 
@@ -40,8 +35,10 @@ int		main(int argc, char **argv)
 		return (-1);
 	if (ft_thread_create(&dat, philos))
 		return (-1);
+	ft_patrol(philos);
 //posible blucle de detuchs
-	printf("Fin de la ejecución\n");/**/
+	printf("Fin de la ejecución\n");/*Debug*/
+	sleep(10);
 	free(dat.fork_mutex);
 	free(philos);
 	return (0);

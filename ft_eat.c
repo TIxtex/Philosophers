@@ -4,12 +4,12 @@ void	*ft_take_forks(t_philo *philo, int first, int second)
 {
 	if (pthread_mutex_lock(&philo->dat->fork_mutex[first]))
 		return (NULL);
-	if (ft_dead_check(philo))
-		printf("%f	-	%d has taken a fork %d\n", ft_time_diff(philo->dat->i_time, philo->aux_time), philo->philo_id, first);
+	if (ft_dead_door(philo))
+		ft_write(philo, "has taken a fork")
 	if (pthread_mutex_lock(&philo->dat->fork_mutex[second]))
 		return (NULL);
-	if (ft_dead_check(philo))
-		printf("%f	-	%d has taken a fork %d\n", ft_time_diff(philo->dat->i_time, philo->aux_time), philo->philo_id, second);
+	if (ft_dead_door(philo))
+		ft_write(philo, "has taken a fork")
 	return (NULL);
 }
 
@@ -17,12 +17,12 @@ void	*ft_leave_forks(t_philo *philo, int first, int second)
 {
 	if (pthread_mutex_unlock(&philo->dat->fork_mutex[first]))
 		return (NULL);
-	if (ft_dead_check(philo))
-		printf("%f	-	%d has leaven a fork %d\n", ft_time_diff(philo->dat->i_time, philo->aux_time), philo->philo_id, first);
+	if (ft_dead_door(philo))
+		ft_write(philo, "has leaven a fork")
 	if (pthread_mutex_unlock(&philo->dat->fork_mutex[second]))
 		return (NULL);
-	if (ft_dead_check(philo))
-		printf("%f	-	%d has leaven a fork %d\n", ft_time_diff(philo->dat->i_time, philo->aux_time), philo->philo_id, second);
+	if (ft_dead_door(philo))
+		ft_write(philo, "has leaven a fork")
 	return (NULL);
 }
 
@@ -66,8 +66,8 @@ void	ft_leave_phase(t_philo *philo)
 void	ft_eat(t_philo *philo)
 {
 	ft_take_phase(philo);
-	if (ft_dead_check(philo))
-		printf("%f	-	%d is eating\n", ft_time_diff(philo->dat->i_time, philo->aux_time), philo->philo_id);
+	if (ft_dead_door(philo))
+		ft_write(philo, "is eating");
 	philo->aux_time = ft_wait_time(philo->aux_time, ft_usec(philo->dat->time_to_eat));//**//
 	philo->last_eat.tv_sec = philo->aux_time.tv_sec;
 	philo->last_eat.tv_usec = philo->aux_time.tv_usec;

@@ -13,7 +13,7 @@ void	*ft_pthread_handler(void *arg)
 		ft_eat(philo);//no puede comer si esta muerto
 		ft_slepping(philo);//esto lo va a hacer si o si if no ha muerto nadie
 		ft_thinking(philo);//aqui no hace nada, simplemente espera por los palillos if no ha muerto nadie
-		if (!ft_dead_check(philo))
+		if (!ft_dead_door(philo))
 			break ;
 	}
 	printf("%d - Fin de las comidas\n", philo->philo_id);//DEBUG

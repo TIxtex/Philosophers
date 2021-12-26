@@ -43,13 +43,5 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 		else
 			philos[i].last_eat = ft_actual_time(void);
 	}
-	ft_patrol(dat);
-/*
-	i = 1;
-	while (i)
-		i = philos->dat->p_num;
-	while (--i >= 0)
-		pthread_join(philos[i].philo, NULL);
-*/
 	return (0);
 }

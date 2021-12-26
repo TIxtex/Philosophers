@@ -24,7 +24,7 @@ typedef struct s_data
 	int				time_to_death;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				must_eat;
+	int				must_eat;			//Veces que tiene que comer
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	dead_mutex;
 	pthread_mutex_t	write_mutex;
@@ -32,7 +32,9 @@ typedef struct s_data
 	t_philo			*philos;
 }					t_data;
 
-void			ft_patrol(t_data *dat);
+//FT_MAIN_C
+void			ft_patrol(t_philo *philos);
+int				ft_starve(t_philo *philo);
 //FT_CHECK_ARG_C
 int				ft_check_arg(int argc, char **argv);
 void			ft_asing_arg(t_data *dat, int argc, char **argv);
@@ -46,6 +48,7 @@ void			*ft_pthread_handler(void *arg);
 //FT_ACTIONS_C
 void			ft_slepping(t_philo *philo);
 void			ft_thinking(t_philo *philo);
+void			ft_write(t_philo philo, char *msg);
 //FT_EAT_C
 void			ft_eat(t_philo *philo);
 //FT_TIME_C
@@ -53,8 +56,6 @@ double			ft_time_diff(long long start, long long end);
 struct timeval	ft_wait_time(struct timeval time, double time_wait);
 long long 		ft_now_time(void);
 //FT_DEAD_C
-int				ft_starve(t_philo *philo);
-int				ft_dead_check(t_philo *philo);
 int 			ft_dead_door(t_philo *philo);
 
 #endif

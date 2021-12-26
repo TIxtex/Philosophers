@@ -42,6 +42,6 @@ int	ft_check_arg(int argc, char **argv)
 		;
 	else
 		return (0);
-	write(STDERR_FILENO, "Error\n", 6);
+	write(STDERR_FILENO, "Error ARGS\n", 11);
 	return (1);
 }
