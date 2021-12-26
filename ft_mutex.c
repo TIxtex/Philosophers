@@ -31,7 +31,7 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 	if (NULL == philos)
 		return (1);
 	dat->philos = philos;
-	dat->i_time = ft_actual_time(void);
+	dat->i_time = ft_now_time(void);
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;
@@ -41,7 +41,7 @@ int	ft_thread_create(t_data *dat, t_philo *philos)
 				NULL, &ft_pthread_handler, (void *)&philos[i]))
 			return (1);
 		else
-			philos[i].last_eat = ft_actual_time(void);
+			philos[i].last_eat = ft_now_time();
 	}
 	return (0);
 }
