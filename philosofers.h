@@ -42,7 +42,7 @@ void			ft_asing_arg(t_data *dat, int argc, char **argv);
 long			ft_atoi(const char *str);
 //FT_MUTEX_C
 int				ft_mutex_create(t_data *dat);
-int				ft_thread_create(t_data *dat, t_philo *philos);
+t_philo			*ft_thread_create(t_data *dat, t_philo *philos);
 //FT_PTHREAD_C
 void			*ft_pthread_handler(void *arg);
 //FT_ACTIONS_C

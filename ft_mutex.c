@@ -4,7 +4,7 @@ int	ft_mutex_create(t_data *dat)
 {
 	int	i;
 
-	i = 0;	
+	i = 0;
 	if (1 == dat->p_num)
 		i = 1;
 	dat->fork_mutex = (pthread_mutex_t *)malloc(
@@ -22,26 +22,25 @@ int	ft_mutex_create(t_data *dat)
 	return (0);
 }
 
-int	ft_thread_create(t_data *dat, t_philo *philos)
+t_philo	*ft_thread_create(t_data *dat, t_philo *philos)
 {
 	int	i;
 
 	i = -1;
 	philos = (t_philo *)malloc(dat->p_num * sizeof(t_philo));
 	if (NULL == philos)
-		return (1);
+		return (NULL);
 	dat->philos = philos;
 	dat->i_time = ft_now_time();
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;
 		philos[i].dat = dat;
-		
 		if (0 != pthread_create(&philos[i].philo,
 				NULL, &ft_pthread_handler, (void *)&philos[i]))
-			return (1);
+			return (NULL);
 		else
 			philos[i].last_eat = ft_now_time();
 	}
-	return (0);
+	return (philos);
 }

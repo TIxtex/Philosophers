@@ -34,12 +34,14 @@ int		main(int argc, char **argv)
 	ft_asing_arg(&dat, argc, argv);
 	if (ft_mutex_create(&dat))
 		return (-1);
-	if (ft_thread_create(&dat, philos))
+	philos = ft_thread_create(&dat, philos);
+	if (NULL == philos)
 		return (-1);
+	printf("Inicio Patrol\n");/*Debug*/
 	ft_patrol(philos);
 //posible blucle de detuchs
 	printf("Fin de la ejecución\n");/*Debug*/
-	sleep(10);
+	sleep(1);
 	free(dat.fork_mutex);
 	free(philos);
 	return (0);
