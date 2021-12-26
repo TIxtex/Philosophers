@@ -13,14 +13,14 @@ long long ft_now_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-struct timeval	ft_wait_time(struct timeval time, double time_wait)
+struct timeval	ft_wait_time(long long time_wait)
 {
-	struct timeval	time_init;
-	struct timeval	time_now;
+	long long	time_init;
+	long long	time_now;
 
-	time_init = time;
-	time_now = time;
+	time_init = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	time_now = time_init;
 	while (time_wait > ft_time_diff(time_init, time_now))
-		gettimeofday(&time_now, NULL);
+		time_now = ft_now_time();
 	return (time_now);
 }

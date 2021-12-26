@@ -53,7 +53,7 @@ void			ft_write(t_philo philo, char *msg);
 void			ft_eat(t_philo *philo);
 //FT_TIME_C
 double			ft_time_diff(long long start, long long end);
-struct timeval	ft_wait_time(struct timeval time, double time_wait);
+struct timeval	ft_wait_time(long long time_wait);
 long long 		ft_now_time(void);
 //FT_DEAD_C
 int 			ft_dead_door(t_philo *philo);

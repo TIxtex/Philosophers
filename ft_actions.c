@@ -12,7 +12,7 @@ void	ft_slepping(t_philo *philo)
 {
 	if (ft_dead_door(philo))
 		ft_write(philo, "is sleeping");
-	philo->aux_time = ft_wait_time(philo->aux_time, ft_usec(philo->dat->time_to_sleep));
+	philo->aux_time = ft_wait_time(ft_usec(philo->dat->time_to_sleep));
 }
 
 void	ft_thinking(t_philo *philo)
