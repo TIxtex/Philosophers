@@ -16,6 +16,7 @@ void	ft_patrol(t_philo *philos)
 			{
 				flag = 0;
 				philos->dat->dead = 1;
+				ft_write(philo, );
 				i = philos->dat->p_num;
 			}
 			pthread_mutex_unlock(&philos->dat->dead_mutex);
