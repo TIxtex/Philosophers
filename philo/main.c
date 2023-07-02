@@ -16,7 +16,7 @@ void	patrol(t_philo *philos)
 			{
 				flag = 0;
 				philos->dat->dead = 1;
-				ft_write(philo, );
+				ft_write(philos, "Fin de la simulación");//
 				i = philos->dat->p_num;
 			}
 			pthread_mutex_unlock(&philos->dat->dead_mutex);
