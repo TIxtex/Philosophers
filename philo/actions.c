@@ -14,19 +14,19 @@ void	ft_write(t_philo *philo, int msg)
 	else if (-5 == msg)
 	else if (-6 == msg)
 	pthread_mutex_lock(&philo->dat->write_mutex);
-	printf("%lld	-	%d %s\n", ft_time_diff(philo->dat->i_time, ft_now_time()), philo->philo_id, msg);
+	printf("%lld	-	%d %s\n", time_diff(philo->dat->i_time, now_time()), philo->philo_id, msg);
 	pthread_mutex_unlock(&philo->dat->write_mutex);
 }
 
-void	ft_slepping(t_philo *philo)
+void	slepping(t_philo *philo)
 {
-	if (ft_dead_door(philo))
+	if (dead_door(philo))
 		ft_write(philo, "is sleeping");
-	ft_wait_time(philo->dat->time_to_sleep);
+	wait_time(philo->dat->time_to_sleep);
 }
 
-void	ft_thinking(t_philo *philo)
+void	thinking(t_philo *philo)
 {
-	if(ft_dead_door(philo))
+	if(dead_door(philo))
 		ft_write(philo, "is thinking");
 }

@@ -1,6 +1,6 @@
 #include "philosofers.h"
 
-int	ft_mutex_create(t_data *dat)
+int	mutex_create(t_data *dat)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	ft_mutex_create(t_data *dat)
 	return (0);
 }
 
-t_philo	*ft_thread_create(t_data *dat, t_philo *philos)
+t_philo	*thread_create(t_data *dat, t_philo *philos)
 {
 	int	i;
 
@@ -31,16 +31,16 @@ t_philo	*ft_thread_create(t_data *dat, t_philo *philos)
 	if (NULL == philos)
 		return (NULL);
 	dat->philos = philos;
-	dat->i_time = ft_now_time();
+	dat->i_time = now_time();
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;
 		philos[i].dat = dat;
 		if (0 != pthread_create(&philos[i].philo,
-				NULL, &ft_pthread_handler, (void *)&philos[i]))
+				NULL, &pthread_handler, (void *)&philos[i]))
 			return (NULL);
 		else
-			philos[i].last_eat = ft_now_time();
+			philos[i].last_eat = now_time();
 	}
 	return (philos);
 }

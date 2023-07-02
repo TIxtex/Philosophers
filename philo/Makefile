@@ -1,16 +1,17 @@
 NAME = philo
-SOURCES = ft_libft.c ft_check_arg.c ft_time.c ft_dead.c\
-	ft_mutex.c ft_pthread.c ft_actions.c ft_eat.c\
+COMPILER = gcc -std=c89
+FLAGS = -Wall -Wextra -Werror -pedantic
+THR = -lpthread
+INCLUDES = philosofers.h
+SOURCES = libft.c check_arg.c time.c dead.c\
+	mutex.c pthread.c actions.c eat.c\
 	main.c
 OBJECT = $(SOURCES:.c=.o)
-COMPILER = gcc
-FLAGS = -Wall -Wextra -Werror
-THR = -lpthread
 
 .PHONY: all clean fclean f re
 
 all: $(NAME)
-$(NAME): $(SOURCES)
+$(NAME): $(SOURCES) $(INCLUDES)
 	$(COMPILER) $(FLAGS) -c $(SOURCES)
 	$(COMPILER) $(OBJECT) $(THR) -o $(NAME)
 clean:

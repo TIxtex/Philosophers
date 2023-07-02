@@ -1,6 +1,6 @@
 #include "philosofers.h"
 
-int ft_dead_door(t_philo *philo)
+int dead_door(t_philo *philo)
 {
 	int i;
 

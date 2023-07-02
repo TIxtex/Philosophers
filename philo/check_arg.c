@@ -1,6 +1,6 @@
 #include "philosofers.h"
 
-void	ft_asing_arg(t_data *dat, int argc, char **argv)
+void	asing_arg(t_data *dat, int argc, char **argv)
 {
 	dat->dead = 0;
 	dat->p_num = (int)ft_atoi(argv[1]);
@@ -13,7 +13,7 @@ void	ft_asing_arg(t_data *dat, int argc, char **argv)
 		dat->must_eat = -1;
 }
 
-static int	ft_check_argv(char *argv)
+static int	check_argv(char *argv)
 {
 	while (*argv)
 	{
@@ -24,21 +24,21 @@ static int	ft_check_argv(char *argv)
 	return (0);
 }
 
-int	ft_check_arg(int argc, char **argv)
+int	check_arg(int argc, char **argv)
 {
 	if (argc < 5)
 		;
 	else if (argc > 6)
 		;
-	else if (ft_check_argv(argv[1]))
+	else if (check_argv(argv[1]))
 		;
-	else if (ft_check_argv(argv[2]))
+	else if (check_argv(argv[2]))
 		;
-	else if (ft_check_argv(argv[3]))
+	else if (check_argv(argv[3]))
 		;
-	else if (ft_check_argv(argv[4]))
+	else if (check_argv(argv[4]))
 		;
-	else if (6 == argc && ft_check_argv(argv[5]))
+	else if (6 == argc && check_argv(argv[5]))
 		;
 	else
 		return (0);
