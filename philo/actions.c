@@ -9,13 +9,11 @@ void	ft_write(t_philo *philo, char *msg)
 
 void	slepping(t_philo *philo)
 {
-	if (dead_door(philo))
-		ft_write(philo, "is sleeping");
+	ft_write(philo, "is sleeping");
 	wait_time(philo->dat->time_to_sleep);
 }
 
 void	thinking(t_philo *philo)
 {
-	if(dead_door(philo))
-		ft_write(philo, "is thinking");
+	ft_write(philo, "is thinking");
 }

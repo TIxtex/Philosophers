@@ -4,22 +4,18 @@ int	mutex_create(t_data *dat)
 {
 	int	i;
 
-	i = 0;
-	if (1 == dat->p_num)
-		i = 1;
 	dat->fork_mutex = (pthread_mutex_t *)malloc(
-			(dat->p_num + i) * sizeof(pthread_mutex_t));
+			dat->p_num * sizeof(pthread_mutex_t));
 	if (NULL == dat->fork_mutex)
-		return (1);
-	i += dat->p_num;
+		return (EXIT_FAILURE);
+	i = dat->p_num;
 	while (i-- > 0)
-		if (-1 == pthread_mutex_init(&dat->fork_mutex[i], NULL))
-			return (1);
-	if (-1 == pthread_mutex_init(&dat->dead_mutex, NULL))
-		return (1);
-	if (-1 == pthread_mutex_init(&dat->write_mutex, NULL))
-		return (1);
-	return (0);
+		if (!pthread_mutex_init(&dat->fork_mutex[i],
+			PTHREAD_MUTEX_ERRORCHECK))
+			return (EXIT_FAILURE);
+	if (!pthread_mutex_init(&dat->write_mutex, PTHREAD_MUTEX_ERRORCHECK))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 t_philo	*thread_create(t_data *dat, t_philo *philos)
@@ -36,8 +32,8 @@ t_philo	*thread_create(t_data *dat, t_philo *philos)
 	{
 		philos[i].philo_id = i + 1;
 		philos[i].dat = dat;
-		if (0 != pthread_create(&philos[i].philo,
-				NULL, &pthread_handler, (void *)&philos[i]))
+		if (!pthread_create(&philos[i].philo,
+			PTHREAD_EXPLICIT_SCHED, &pthread_handler, (void *)&philos[i]))
 			return (NULL);
 		else
 			philos[i].last_eat = now_time();

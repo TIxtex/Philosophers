@@ -7,7 +7,6 @@ SOURCES = \
 	libft.c \
 	check_arg.c \
 	time.c \
-	dead.c \
 	mutex.c \
 	pthread.c \
 	actions.c \
@@ -21,7 +20,7 @@ all: $(NAME)
 $(NAME): $(OBJECTS) $(INCLUDES)
 	$(CC) $(CFLAGS) $(OBJECTS) $(THR) -o $(NAME)
 clean:
-	/bin/rm -rf $(OBJECT)
+	/bin/rm -rf $(OBJECTS)
 fclean: clean
 	/bin/rm -rf $(NAME)
 f: fclean

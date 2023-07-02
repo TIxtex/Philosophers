@@ -1,11 +1,11 @@
 #include "philosofers.h"
 
-long long	time_diff(long long start, long long end)
+long	time_diff(long start, long end)
 {
 	return (end - start);
 }
 
-long long	now_time(void)
+long	now_time(void)
 {
 	struct timeval	time;
 
@@ -13,10 +13,10 @@ long long	now_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-long long	wait_time(long long time_wait)
+long	wait_time(long time_wait)
 {
-	long long	time_init;
-	long long	time_now;
+	long	time_init;
+	long	time_now;
 
 	time_init = now_time();
 	time_now = time_init;
