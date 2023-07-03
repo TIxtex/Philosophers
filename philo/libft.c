@@ -16,3 +16,14 @@ long	ft_atoi(const char *str)
 		returned = (returned * 10) + (*(str++) - 48);
 	return (returned * nbr_of_neg);
 }
+
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	if (str)
+		while (str[i])
+			i++;
+	return (i);
+}

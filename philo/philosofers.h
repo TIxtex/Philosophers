@@ -6,6 +6,7 @@
 # include <string.h>	//memset()
 # include <sys/time.h>	//gettimeofday()
 # include <pthread.h>	//pthread()
+# include <limits.h>
 
 struct s_data;
 
@@ -32,13 +33,15 @@ typedef struct s_data
 }	t_data;
 
 long		ft_atoi(const char *str);
+size_t		ft_strlen(char *str);
 int			mutex_create(t_data *dat);
 t_philo		*thread_create(t_data *dat, t_philo *philos);
 void		*pthread_handler(void *arg);
-void		slepping(t_philo *philo);
-void		thinking(t_philo *philo);
-void		ft_write(t_philo *philo, char *msg);
-int 		eat(t_philo *philo);
+int			patrol(t_philo *philos);
+int			slepping(t_philo *philo);
+int			thinking(t_philo *philo);
+int			ft_write(t_philo *philo, char *msg);
+int			eat(t_philo *philo);
 long		time_diff(long start, long end);
 long		wait_time(long time_wait);
 long 		now_time(void);

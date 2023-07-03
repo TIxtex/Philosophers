@@ -1,5 +1,18 @@
 #include "philosofers.h"
 
+static void free_all(t_data dat, t_philo *philos)
+{
+	int i;
+
+	i = -1;
+	sleep(1);
+	while (++i < dat.p_num)
+		pthread_mutex_destroy(&dat.fork_mutex[i]);
+	pthread_mutex_destroy(&dat.write_mutex);
+	free(dat.fork_mutex);
+	free(philos);
+}
+
 static void	asing_arg(t_data *dat, int argc, char **argv)
 {
 	dat->dead = 0;
@@ -16,12 +29,20 @@ static void	asing_arg(t_data *dat, int argc, char **argv)
 
 static int	check_argv(char *argv)
 {
-	while (*argv)
+	size_t	i;
+
+	if (10 < ft_strlen(argv))
+		return (EXIT_FAILURE);
+	i = 0;
+	while (argv[i])
 	{
-		if (!((unsigned)*argv - '0' < 10))
-			return (1);
-		argv++;
+		if (!((unsigned)argv[i] - '0' < 10))
+			return (EXIT_FAILURE);
+		i++;
 	}
+	i = ft_atoi(argv);
+	if (INT_MAX < i)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -47,31 +68,6 @@ static int	check_arg(int argc, char **argv)
 	return (EXIT_FAILURE);
 }
 
-static void	patrol(t_philo *philos)
-{
-	int	flag;
-	int	i;
-
-	flag = 1;
-	while (flag)
-	{
-		i = -1;
-		while (++i < philos->dat->p_num)
-		{
-			
-			if (philos->dat->time_to_death <= time_diff(philos[i].last_eat , now_time()))
-			{
-				pthread_mutex_lock(&philos->dat->dead_mutex);
-				flag = 0;
-				philos->dat->dead = 1;
-				ft_write(philos, "Fin de la simulación");//
-				i = philos->dat->p_num;
-				pthread_mutex_unlock(&philos->dat->dead_mutex);
-			}
-		}
-	}
-}
-
 int		main(int argc, char **argv)
 {
 	t_data	dat;
@@ -80,18 +76,14 @@ int		main(int argc, char **argv)
 	philos = NULL;
 	if (check_arg(argc, argv))
 		return (EXIT_FAILURE);
-	asing_arg(&dat, argc, argv);
-	if (mutex_create(&dat))
+	if (asing_arg(&dat, argc, argv), mutex_create(&dat))
 		return (EXIT_FAILURE);
 	philos = thread_create(&dat, philos);
 	if (NULL == philos)
 		return (EXIT_FAILURE);
 	printf("Inicio Patrol\n");/*Debug*/
 	patrol(philos);
-	/*posible blucle de joins*/
 	printf("Fin de la ejecución\n");/*Debug*/
-	sleep(1);
-	free(dat.fork_mutex);
-	free(philos);
+	free_all(dat, philos);
 	return (EXIT_SUCCESS);
 }

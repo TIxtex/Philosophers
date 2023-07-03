@@ -10,10 +10,9 @@ int	mutex_create(t_data *dat)
 		return (EXIT_FAILURE);
 	i = dat->p_num;
 	while (i-- > 0)
-		if (!pthread_mutex_init(&dat->fork_mutex[i],
-			PTHREAD_MUTEX_ERRORCHECK))
+		if (pthread_mutex_init(&dat->fork_mutex[i], NULL))
 			return (EXIT_FAILURE);
-	if (!pthread_mutex_init(&dat->write_mutex, PTHREAD_MUTEX_ERRORCHECK))
+	if (pthread_mutex_init(&dat->write_mutex, NULL))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -32,8 +31,8 @@ t_philo	*thread_create(t_data *dat, t_philo *philos)
 	{
 		philos[i].philo_id = i + 1;
 		philos[i].dat = dat;
-		if (!pthread_create(&philos[i].philo,
-			PTHREAD_EXPLICIT_SCHED, &pthread_handler, (void *)&philos[i]))
+		if (pthread_create(&philos[i].philo,
+			NULL, &pthread_handler, (void *)&philos[i]))
 			return (NULL);
 		else
 			philos[i].last_eat = now_time();

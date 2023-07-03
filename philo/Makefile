@@ -5,7 +5,6 @@ THR = -lpthread
 INCLUDES = philosofers.h
 SOURCES = \
 	libft.c \
-	check_arg.c \
 	time.c \
 	mutex.c \
 	pthread.c \
