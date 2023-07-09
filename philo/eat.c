@@ -4,22 +4,22 @@ static int	take_forks(t_philo *philo, int first, int second)
 {
 	if (pthread_mutex_lock(&philo->dat->fork_mutex[first]))
 		return (EXIT_FAILURE);
-	ft_write(philo, "has taken a fork");
+	if (ft_write(philo, "has taken a 1 fork"))
+		return (EXIT_FAILURE);
 	if (pthread_mutex_lock(&philo->dat->fork_mutex[second]))
 		return (EXIT_FAILURE);
-	ft_write(philo, "has taken a fork");
-	return (EXIT_SUCCESS);
+	return (ft_write(philo, "has taken a 2 fork"));
 }
 
 static int	leave_forks(t_philo *philo, int first, int second)
 {
 	if (pthread_mutex_unlock(&philo->dat->fork_mutex[first]))
 		return (EXIT_FAILURE);
-	ft_write(philo, "has leaven a fork");
+	if (ft_write(philo, "has leaven a 1 fork"))
+		return (EXIT_FAILURE);
 	if (pthread_mutex_unlock(&philo->dat->fork_mutex[second]))
 		return (EXIT_FAILURE);
-	ft_write(philo, "has leaven a fork");
-	return (EXIT_SUCCESS);
+	return (ft_write(philo, "has leaven a 2 fork"));
 }
 
 static int	take_phase(t_philo *philo)
@@ -81,7 +81,5 @@ int	eat(t_philo *philo)
 	if (ft_write(philo, "is eating"))
 		return (EXIT_FAILURE);
 	philo->last_eat = wait_time(philo->dat->time_to_eat);//**//
-	if (leave_phase(philo))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (leave_phase(philo));
 }

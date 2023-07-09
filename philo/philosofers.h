@@ -20,7 +20,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int				dead;
+	int				finish;
 	int				p_num;
 	int				time_to_death;
 	int				time_to_eat;
@@ -28,6 +28,7 @@ typedef struct s_data
 	int				must_eat;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	write_mutex;
+	pthread_mutex_t finish_mutex;
 	long			i_time;
 	t_philo			*philos;
 }	t_data;

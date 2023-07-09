@@ -14,6 +14,8 @@ int	mutex_create(t_data *dat)
 			return (EXIT_FAILURE);
 	if (pthread_mutex_init(&dat->write_mutex, NULL))
 		return (EXIT_FAILURE);
+	if (pthread_mutex_init(&dat->finish_mutex, NULL))
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

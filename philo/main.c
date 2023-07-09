@@ -9,13 +9,14 @@ static void free_all(t_data dat, t_philo *philos)
 	while (++i < dat.p_num)
 		pthread_mutex_destroy(&dat.fork_mutex[i]);
 	pthread_mutex_destroy(&dat.write_mutex);
+	pthread_mutex_destroy(&dat.finish_mutex);
 	free(dat.fork_mutex);
 	free(philos);
 }
 
 static void	asing_arg(t_data *dat, int argc, char **argv)
 {
-	dat->dead = 0;
+	dat->finish = 0;
 	dat->p_num = (int)ft_atoi(argv[1]);
 	dat->time_to_death = (int)ft_atoi(argv[2]);
 	dat->time_to_eat = (int)ft_atoi(argv[3]);
@@ -41,9 +42,7 @@ static int	check_argv(char *argv)
 		i++;
 	}
 	i = ft_atoi(argv);
-	if (INT_MAX < i)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (INT_MAX < i);
 }
 
 static int	check_arg(int argc, char **argv)
@@ -64,8 +63,7 @@ static int	check_arg(int argc, char **argv)
 		;
 	else
 		return (EXIT_SUCCESS);
-	write(STDERR_FILENO, "Error ARGS\n", 11);
-	return (EXIT_FAILURE);
+	return (write(STDERR_FILENO, "Error ARGS\n", 11));
 }
 
 int		main(int argc, char **argv)
