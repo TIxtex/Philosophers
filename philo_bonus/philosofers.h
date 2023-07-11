@@ -4,16 +4,16 @@
 # include <stdio.h>		/*printf()*/
 # include <stdlib.h>	/*malloc()*/
 # include <string.h>	/*memset()*/
-# include <sys/time.h>	/*gettimeofday()*/
+# include <sys/time.h>
 # include <pthread.h>	/*pthread()*/
+# include <semaphore.h>
 # include <limits.h>
 
 struct s_data;
 
 typedef struct s_philo
 {
-	pthread_t		philo;
-	int				philo_id;
+	pid_t			philo;
 	long			last_eat;
 	struct s_data	*dat;
 }	t_philo;
@@ -26,18 +26,18 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
-	pthread_mutex_t	*fork_mutex;
-	pthread_mutex_t	write_mutex;
-	pthread_mutex_t finish_mutex;
+	sem_t			*fork_sem;
+	sem_t			*write_sem;
+	sem_t			*finish_sem;
 	long			i_time;
 	t_philo			*philos;
 }	t_data;
 
 long		ft_atoi(const char *str);
 size_t		ft_strlen(char *str);
-int			mutex_create(t_data *dat);
-t_philo		*thread_create(t_data *dat, t_philo *philos);
-void		*pthread_handler(void *arg);
+int			semaphore_create(t_data *dat);
+void		philos_create(t_data *dat, t_philo *philos);
+void		*philo_handler(void *arg);
 int			patrol(t_philo *philos);
 int			slepping(t_philo *philo);
 int			thinking(t_philo *philo);

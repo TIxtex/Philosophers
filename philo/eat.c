@@ -27,25 +27,19 @@ static int	take_phase(t_philo *philo)
 	if (philo->philo_id % 2)/*impares*/
 	{
 		if (philo->philo_id == philo->dat->p_num)
-		{
-			if (take_forks(philo, 0, philo->philo_id - 1))
-				return (EXIT_FAILURE);
-		}
-		else if (take_forks(philo, philo->philo_id, philo->philo_id - 1))
-			return (EXIT_FAILURE);
+			return (take_forks(philo, philo->philo_id - 1, 0));
+		else
+			return (take_forks(philo, philo->philo_id, philo->philo_id - 1));
 	}
 	else
 	{
-		usleep(philo->dat->time_to_eat / 4);
+		usleep(philo->dat->time_to_eat - (philo->dat->time_to_eat / 4));
 		if (philo->philo_id == philo->dat->p_num)
-		{
-			if (take_forks(philo, philo->philo_id - 1, 0))
-				return (EXIT_FAILURE);
-		}
-		else if (take_forks(philo, philo->philo_id - 1, philo->philo_id))
-			return (EXIT_FAILURE);
+			return (take_forks(philo, philo->philo_id - 1, 0));
+		else
+			return (take_forks(philo, philo->philo_id - 1, philo->philo_id));
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 static int	leave_phase(t_philo *philo)
@@ -53,24 +47,18 @@ static int	leave_phase(t_philo *philo)
 	if (philo->philo_id % 2)/*impares*/
 	{
 		if (philo->philo_id == philo->dat->p_num)
-		{
-			if(leave_forks(philo, 0, philo->philo_id - 1))
-				return (EXIT_FAILURE);
-		}
-		else if(leave_forks(philo, philo->philo_id, philo->philo_id - 1))
-			return (EXIT_FAILURE);
+			return (leave_forks(philo, 0, philo->philo_id - 1));
+		else
+			return (leave_forks(philo, philo->philo_id - 1, philo->philo_id));
 	}
 	else
 	{
 		if (philo->philo_id == philo->dat->p_num)
-		{
-			if (leave_forks(philo, philo->philo_id - 1, 0))
-				return (EXIT_FAILURE);
-		}
-		else if (leave_forks(philo, philo->philo_id - 1, philo->philo_id))
-				return (EXIT_FAILURE);
+			return (leave_forks(philo, philo->philo_id - 1, 0));
+		else
+			return (leave_forks(philo, philo->philo_id - 1, philo->philo_id));
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 int	eat(t_philo *philo)
@@ -80,6 +68,6 @@ int	eat(t_philo *philo)
 		return (EXIT_FAILURE);
 	if (ft_write(philo, "is eating"))
 		return (EXIT_FAILURE);
-	philo->last_eat = wait_time(philo->dat->time_to_eat);//**//
+	philo->last_eat = wait_time(philo->dat->time_to_eat);
 	return (leave_phase(philo));
 }

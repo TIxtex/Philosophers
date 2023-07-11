@@ -2,16 +2,13 @@
 
 static void free_all(t_data dat, t_philo *philos)
 {
-	int i;
-
-	i = -1;
-	sleep(1);
-	while (++i < dat.p_num)
-		pthread_mutex_destroy(&dat.fork_mutex[i]);
-	pthread_mutex_destroy(&dat.write_mutex);
-	pthread_mutex_destroy(&dat.finish_mutex);
-	free(dat.fork_mutex);
-	free(philos);
+	sem_close(dat.fork_sem);
+	sem_close(dat.write_sem);
+	sem_close(dat.finish_sem);
+	sem_unlink("fork");
+	sem_unlink("write");
+	sem_unlink("finish");
+	free (philos);
 }
 
 static void	asing_arg(t_data *dat, int argc, char **argv)
@@ -25,7 +22,6 @@ static void	asing_arg(t_data *dat, int argc, char **argv)
 		dat->must_eat = (int)ft_atoi(argv[5]);
 	else
 		dat->must_eat = -1;
-	dat->fork_mutex = NULL;
 }
 
 static int	check_argv(char *argv)
@@ -74,12 +70,8 @@ int		main(int argc, char **argv)
 	philos = NULL;
 	if (check_arg(argc, argv))
 		return (EXIT_FAILURE);
-	if (asing_arg(&dat, argc, argv), mutex_create(&dat))
+	if (asing_arg(&dat, argc, argv), semaphore_create(&dat))
 		return (EXIT_FAILURE);
-	philos = thread_create(&dat, philos);
-	if (NULL == philos)
-		return (free_all(&dat, NULL), EXIT_FAILURE);
-	if (patrol(philos))
-		return (free_all(dat, philos), EXIT_FAILURE);
+	philos_create(&dat, philos);
 	return (free_all(dat, philos), EXIT_SUCCESS);
 }

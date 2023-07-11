@@ -1,4 +1,4 @@
-NAME = philo
+NAME = philo_bonus
 CC = gcc
 CFLAGS = -std=c89 -Wall -Wextra -Werror -pedantic
 THR = -lpthread
@@ -6,10 +6,9 @@ INCLUDES = philosofers.h
 SOURCES = \
 	libft.c \
 	time.c \
-	mutex.c \
-	pthread.c \
+	semaphore.c \
+	philos.c \
 	actions.c \
-	eat.c\
 	main.c
 OBJECTS = $(SOURCES:.c=.o)
 
