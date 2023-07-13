@@ -1,6 +1,6 @@
 #include "philosofers.h"
 
-#define ERR_0 "Error al hacer join al hilo o error en el hilo al hacer join"
+#define ERR_0 "Error al hacer kill al proceso"
 
 static int	finish_eat(t_philo *philo)
 {
@@ -32,18 +32,16 @@ void	*philo_handler(void *arg)
 
 static int	post_patrol(t_philo *philos)
 {
-/*	int	i;
-	void	*aux;
+	int	i;
 
 	i = -1;
-	aux = NULL;
 	while (++i < philos->dat->p_num)
-		if (pthread_join(philos[i].philo, aux) || aux)
-			return (printf("%s %d\n", ERR_0, i));*/
+		if (kill(philos[i].philo, SIGTERM))
+			return (printf("%s %d\n", ERR_0, i));
 	return (sem_post(philos->dat->write_sem));
 }
 
-int patrol(t_philo *philos)
+int	patrol(t_philo *philos)
 {
 	int	i;
 

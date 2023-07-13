@@ -7,7 +7,11 @@
 # include <sys/time.h>
 # include <pthread.h>	/*pthread()*/
 # include <semaphore.h>
+# include <signal.h>
 # include <limits.h>
+# include <errno.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 struct s_data;
 
@@ -45,6 +49,6 @@ int			ft_write(t_philo *philo, char *msg);
 int			eat(t_philo *philo);
 long		time_diff(long start, long end);
 long		wait_time(long time_wait);
-long 		now_time(void);
+long		now_time(void);
 
 #endif

@@ -1,25 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   semaphore.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/13 16:11:51 by uliherre          #+#    #+#             */
+/*   Updated: 2023/07/13 16:12:15 by uliherre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosofers.h"
 
 int	semaphore_create(t_data *dat)
 {
-	int	i;
-
-	dat->fork_sem = sem_open("fork", O_CREAT);
+	dat->fork_sem = sem_open("/fk", O_CREAT, S_IRUSR | S_IWUSR, dat->p_num / 2);
 	if (!dat->fork_sem)
 		return (EXIT_FAILURE);
-	i = -1;
-	while (dat->p_num / 2 > ++i)
-		if (sem_post(dat->fork_sem))
-			return (EXIT_FAILURE);
-	dat->write_sem = sem_open("write", O_CREAT);
+	dat->write_sem = sem_open("/write", O_CREAT, S_IRUSR | S_IWUSR, 1);
 	if (!dat->write_sem)
 		return (EXIT_FAILURE);
-	dat->finish_sem = sem_open("finish", O_CREAT);
+	dat->finish_sem = sem_open("/finish", O_CREAT, S_IRUSR | S_IWUSR, 1);
 	if (!dat->finish_sem)
 		return (EXIT_FAILURE);
-	if (sem_post(dat->finish_sem))
-		return (EXIT_FAILURE);
-	return (sem_post(dat->write_sem));
+	return (EXIT_SUCCESS);
 }
 
 void	philos_create(t_data *dat, t_philo *philos)

@@ -5,9 +5,9 @@ static void free_all(t_data dat, t_philo *philos)
 	sem_close(dat.fork_sem);
 	sem_close(dat.write_sem);
 	sem_close(dat.finish_sem);
-	sem_unlink("fork");
-	sem_unlink("write");
-	sem_unlink("finish");
+	sem_unlink("/fk");
+	sem_unlink("/write");
+	sem_unlink("/finish");
 	free (philos);
 }
 
@@ -62,7 +62,7 @@ static int	check_arg(int argc, char **argv)
 	return (write(STDERR_FILENO, "Error ARGS\n", 11));
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	dat;
 	t_philo	*philos;
@@ -72,6 +72,7 @@ int		main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (asing_arg(&dat, argc, argv), semaphore_create(&dat))
 		return (EXIT_FAILURE);
+	write(1, "XXX\n", 4);
 	philos_create(&dat, philos);
 	return (free_all(dat, philos), EXIT_SUCCESS);
 }
