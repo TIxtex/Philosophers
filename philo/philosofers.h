@@ -7,6 +7,7 @@
 # include <sys/time.h>	/*gettimeofday()*/
 # include <pthread.h>	/*pthread()*/
 # include <limits.h>
+# include <errno.h>
 
 struct s_data;
 

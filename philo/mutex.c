@@ -2,26 +2,26 @@
 
 int	mutex_create(t_data *dat)
 {
-	int	i;
+	register int	i;
 
 	dat->fork_mutex = (pthread_mutex_t *)malloc(
 			dat->p_num * sizeof(pthread_mutex_t));
 	if (NULL == dat->fork_mutex)
-		return (EXIT_FAILURE);
+		return (errno);
 	i = dat->p_num;
 	while (i-- > 0)
 		if (pthread_mutex_init(&dat->fork_mutex[i], NULL))
-			return (EXIT_FAILURE);
+			return (errno);
 	if (pthread_mutex_init(&dat->write_mutex, NULL))
-		return (EXIT_FAILURE);
+		return (errno);
 	if (pthread_mutex_init(&dat->finish_mutex, NULL))
-		return (EXIT_FAILURE);
+		return (errno);
 	return (EXIT_SUCCESS);
 }
 
 t_philo	*thread_create(t_data *dat, t_philo *philos)
 {
-	int	i;
+	register int	i;
 
 	i = -1;
 	philos = (t_philo *)malloc(dat->p_num * sizeof(t_philo));

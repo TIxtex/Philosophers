@@ -5,15 +5,15 @@
 static int	finish_eat(t_philo *philo)
 {
 	if (pthread_mutex_lock(&philo->dat->finish_mutex))
-		return (EXIT_FAILURE);
+		return (errno);
 	philo->dat->finish += 1;
 	return (pthread_mutex_unlock(&philo->dat->finish_mutex));
 }
 
 void	*pthread_handler(void *arg)
 {
-	t_philo		*philo;
-	int			i;
+	t_philo			*philo;
+	register int	i;
 
 	philo = (t_philo *)arg;
 	i = 0;
@@ -32,20 +32,20 @@ void	*pthread_handler(void *arg)
 
 static int	post_patrol(t_philo *philos)
 {
-	int	i;
-	void	*aux;
+	register int	i;
+	void			*aux;
 
 	i = -1;
 	aux = NULL;
 	while (++i < philos->dat->p_num)
-		if (pthread_join(philos[i].philo, aux) || aux)
-			return (printf("%s %d\n", ERR_0, i));
+		if (pthread_join(philos[i].philo, aux) || *(int *)aux)
+			return (printf("%s %d\n", ERR_0, i), errno);
 	return (pthread_mutex_unlock(&philos->dat->write_mutex));
 }
 
 int patrol(t_philo *philos)
 {
-	int	i;
+	register int	i;
 
 	i = -1;
 	while (++i < philos->dat->p_num)
@@ -53,8 +53,7 @@ int patrol(t_philo *philos)
 		if (philos->dat->time_to_death <= time_diff(philos[i].last_eat , now_time()))
 		{
 			if (pthread_mutex_lock(&philos->dat->write_mutex))
-				return (EXIT_FAILURE);
-
+				return (errno);
 			printf("%ld	-	%d %s\n", time_diff(philos->dat->i_time, now_time()), philos[i].philo_id, "is dead\nEND OF SIMULATION");
 			sleep (1);
 			break;

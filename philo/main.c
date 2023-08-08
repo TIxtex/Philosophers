@@ -47,17 +47,12 @@ static int	check_argv(char *argv)
 
 static int	check_arg(int argc, char **argv)
 {
-	if (argc < 5)
+	if (argc < 5 || argc > 6)
 		;
-	else if (argc > 6)
-		;
-	else if (check_argv(argv[1]))
-		;
-	else if (check_argv(argv[2]))
-		;
-	else if (check_argv(argv[3]))
-		;
-	else if (check_argv(argv[4]))
+	else if (check_argv(argv[1])
+		|| check_argv(argv[2])
+		|| check_argv(argv[3])
+		|| check_argv(argv[4]))
 		;
 	else if (6 == argc && check_argv(argv[5]))
 		;
@@ -78,7 +73,7 @@ int		main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	philos = thread_create(&dat, philos);
 	if (NULL == philos)
-		return (free_all(&dat, NULL), EXIT_FAILURE);
+		return (free_all(dat, NULL), EXIT_FAILURE);
 	if (patrol(philos))
 		return (free_all(dat, philos), EXIT_FAILURE);
 	return (free_all(dat, philos), EXIT_SUCCESS);
