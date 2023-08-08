@@ -40,7 +40,7 @@ typedef struct s_data
 long		ft_atoi(const char *str);
 size_t		ft_strlen(char *str);
 int			semaphore_create(t_data *dat);
-void		philos_create(t_data *dat, t_philo *philos);
+int			philos_create(t_data *dat, t_philo *philos);
 void		*philo_handler(void *arg);
 int			patrol(t_philo *philos);
 int			slepping(t_philo *philo);

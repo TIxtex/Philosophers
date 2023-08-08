@@ -59,7 +59,7 @@ static int	check_arg(int argc, char **argv)
 		;
 	else
 		return (EXIT_SUCCESS);
-	return (write(STDERR_FILENO, "Error ARGS\n", 11));
+	return (write(STDERR_FILENO, "Error ARGS\n", sizeof("Error ARGS\n")));
 }
 
 int	main(int argc, char **argv)
@@ -69,10 +69,9 @@ int	main(int argc, char **argv)
 
 	philos = NULL;
 	if (check_arg(argc, argv))
-		return (EXIT_FAILURE);
+		return (errno);
 	if (asing_arg(&dat, argc, argv), semaphore_create(&dat))
-		return (EXIT_FAILURE);
-	write(1, "XXX\n", 4);
+		return (errno);
 	philos_create(&dat, philos);
 	return (free_all(dat, philos), EXIT_SUCCESS);
 }

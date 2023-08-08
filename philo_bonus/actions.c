@@ -3,11 +3,12 @@
 int	ft_write(t_philo *philo, char *msg)
 {
 	if (sem_wait(philo->dat->write_sem))
-		return (EXIT_FAILURE);
+		return (errno);
 	if (philo->dat->finish == philo->dat->p_num)
 	{
-		sem_post(philo->dat->write_sem);
-		exit (EXIT_FAILURE);
+		if (sem_post(philo->dat->write_sem))
+			return(errno);
+		exit (EXIT_SUCCESS);
 	}
 	else
 		printf("%ld	-	%d %s\n", time_diff(philo->dat->i_time, now_time()), philo->philo, msg);
@@ -18,7 +19,7 @@ int	eat(t_philo *philo)
 {
 	
 	if (sem_wait(philo->dat->fork_sem))
-		return (EXIT_FAILURE);
+		return (errno);
 	if (ft_write(philo, "is eating"))
 		return (EXIT_FAILURE);
 	philo->last_eat = wait_time(philo->dat->time_to_eat);
