@@ -4,7 +4,7 @@ int	ft_write(t_philo *philo, char *msg)
 {
 	if (pthread_mutex_lock(&philo->dat->write_mutex))
 		return (errno);
-	if (philo->dat->finish == philo->dat->p_num)
+	if (philo->dat->finish == philo->dat->p_num)//modify
 	{
 		pthread_mutex_unlock(&philo->dat->write_mutex);
 		pthread_detach(philo->philo);

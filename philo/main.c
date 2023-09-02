@@ -9,14 +9,15 @@ static void free_all(t_data dat, t_philo *philos)
 	while (++i < dat.p_num)
 		pthread_mutex_destroy(&dat.fork_mutex[i]);
 	pthread_mutex_destroy(&dat.write_mutex);
-	pthread_mutex_destroy(&dat.finish_mutex);
+	pthread_mutex_destroy(&dat.finish.mutex_var);
 	free(dat.fork_mutex);
-	free(philos);
+	if (NULL != philos)
+		free(philos);
 }
 
 static void	asing_arg(t_data *dat, int argc, char **argv)
 {
-	dat->finish = 0;
+	dat->finish.var = 0;
 	dat->p_num = (int)ft_atoi(argv[1]);
 	dat->time_to_death = (int)ft_atoi(argv[2]);
 	dat->time_to_eat = (int)ft_atoi(argv[3]);

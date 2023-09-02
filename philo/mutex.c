@@ -14,7 +14,7 @@ int	mutex_create(t_data *dat)
 			return (errno);
 	if (pthread_mutex_init(&dat->write_mutex, NULL))
 		return (errno);
-	if (pthread_mutex_init(&dat->finish_mutex, NULL))
+	if (pthread_mutex_init(&dat->finish.mutex_var, NULL))
 		return (errno);
 	return (EXIT_SUCCESS);
 }
@@ -37,7 +37,9 @@ t_philo	*thread_create(t_data *dat, t_philo *philos)
 			NULL, &pthread_handler, (void *)&philos[i]))
 			return (NULL);
 		else
-			philos[i].last_eat = now_time();
+		{
+			philos[i].last_eat = now_time();//modify
+		}
 	}
 	return (philos);
 }

@@ -7,21 +7,27 @@
 # include <sys/time.h>	/*gettimeofday()*/
 # include <pthread.h>	/*pthread()*/
 # include <limits.h>
-# include <errno.h>
+# include <errno.h>		/*errno*/
 
 struct s_data;
+
+typedef struct s_share
+{
+	pthread_mutex_t	mutex_var;
+	long			var;
+}	t_share;
 
 typedef struct s_philo
 {
 	pthread_t		philo;
 	int				philo_id;
-	long			last_eat;
+	t_share			last_eat;
 	struct s_data	*dat;
 }	t_philo;
 
 typedef struct s_data
 {
-	int				finish;
+	t_share			finish;
 	int				p_num;
 	int				time_to_death;
 	int				time_to_eat;
@@ -29,7 +35,6 @@ typedef struct s_data
 	int				must_eat;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	write_mutex;
-	pthread_mutex_t finish_mutex;
 	long			i_time;
 	t_philo			*philos;
 }	t_data;
@@ -47,5 +52,7 @@ int			eat(t_philo *philo);
 long		time_diff(long start, long end);
 long		wait_time(long time_wait);
 long 		now_time(void);
+int			av(t_share *v, void *value);
+int			mov(t_share *v, void *value);
 
 #endif
