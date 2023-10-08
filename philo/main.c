@@ -6,10 +6,13 @@ static void free_all(t_data dat, t_philo *philos)
 
 	i = -1;
 	sleep(1);
-	while (++i < dat.p_num)
+	while (++i < dat.p_num)/*PROD*/
+	{
 		pthread_mutex_destroy(&dat.fork_mutex[i]);
+		pthread_mutex_destroy(dat.philos[i].last_eat.mutex_var);
+	}
 	pthread_mutex_destroy(&dat.write_mutex);
-	pthread_mutex_destroy(&dat.finish.mutex_var);
+	pthread_mutex_destroy(dat.finish.mutex_var);
 	free(dat.fork_mutex);
 	if (NULL != philos)
 		free(philos);
@@ -17,7 +20,7 @@ static void free_all(t_data dat, t_philo *philos)
 
 static void	asing_arg(t_data *dat, int argc, char **argv)
 {
-	dat->finish.var = 0;
+	dat->finish.var = ZERO;
 	dat->p_num = (int)ft_atoi(argv[1]);
 	dat->time_to_death = (int)ft_atoi(argv[2]);
 	dat->time_to_eat = (int)ft_atoi(argv[3]);
@@ -35,7 +38,7 @@ static int	check_argv(char *argv)
 
 	if (10 < ft_strlen(argv))
 		return (EXIT_FAILURE);
-	i = 0;
+	i = ZERO;
 	while (argv[i])
 	{
 		if (!((unsigned)argv[i] - '0' < 10))
@@ -71,7 +74,7 @@ int		main(int argc, char **argv)
 	if (check_arg(argc, argv))
 		return (EXIT_FAILURE);
 	if (asing_arg(&dat, argc, argv), mutex_create(&dat))
-		return (EXIT_FAILURE);
+		return (errno);
 	philos = thread_create(&dat, philos);
 	if (NULL == philos)
 		return (free_all(dat, NULL), EXIT_FAILURE);

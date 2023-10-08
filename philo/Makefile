@@ -1,6 +1,6 @@
 NAME = philo
 CC = gcc
-CFLAGS = -std=c89 -Wall -Wextra -Werror -pedantic
+CFLAGS = -Wall -Wextra -Werror -pedantic
 THR = -lpthread
 DEBUG = -fsanitize=thread
 
@@ -34,4 +34,5 @@ fclean: clean
 	/bin/rm -rf $(NAME)
 re: fclean all
 f: fclean
-run: ./$(NAME) $(ARGS)
+run:
+	./$(NAME) $(ARGS)

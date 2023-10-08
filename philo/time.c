@@ -10,7 +10,7 @@ long	now_time(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL))
-		return (errno);
+		exit (errno);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 

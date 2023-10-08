@@ -9,11 +9,13 @@
 # include <limits.h>
 # include <errno.h>		/*errno*/
 
+#define ZERO 0
+
 struct s_data;
 
 typedef struct s_share
 {
-	pthread_mutex_t	mutex_var;
+	pthread_mutex_t	*mutex_var;
 	long			var;
 }	t_share;
 
@@ -52,7 +54,7 @@ int			eat(t_philo *philo);
 long		time_diff(long start, long end);
 long		wait_time(long time_wait);
 long 		now_time(void);
-int			av(t_share *v, void *value);
-int			mov(t_share *v, void *value);
+long		av(t_share *v);
+void		mv(t_share *v, long value);
 
 #endif

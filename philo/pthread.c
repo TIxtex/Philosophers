@@ -4,10 +4,10 @@
 
 static int	finish_eat(t_philo *philo)
 {
-	if (pthread_mutex_lock(&philo->dat->finish_mutex))
+	if (pthread_mutex_lock(philo->dat->finish.mutex_var))/*PROD*/
 		return (errno);
-	philo->dat->finish += 1;
-	return (pthread_mutex_unlock(&philo->dat->finish_mutex));
+	philo->dat->finish.var += 1;/*PROD*/
+	return (pthread_mutex_unlock(philo->dat->finish.mutex_var));/*PROD*/
 }
 
 void	*pthread_handler(void *arg)
@@ -50,7 +50,7 @@ int patrol(t_philo *philos)
 	i = -1;
 	while (++i < philos->dat->p_num)
 	{
-		if (philos->dat->time_to_death <= time_diff(philos[i].last_eat , now_time()))
+		if (philos->dat->time_to_death <= time_diff(av(&philos[i].last_eat), now_time()))/*PROD*/
 		{
 			if (pthread_mutex_lock(&philos->dat->write_mutex))
 				return (errno);
@@ -58,7 +58,7 @@ int patrol(t_philo *philos)
 			sleep (1);
 			break;
 		}
-		else if (philos->dat->finish == philos->dat->p_num)
+		else if (av(&philos->dat->finish) == philos->dat->p_num)/*PROD*/
 		{
 			printf("%ld	-	%s\n", time_diff(philos->dat->i_time, now_time()), "all finish eat.\nEND OF SIMULATION");
 			return (post_patrol(philos));
