@@ -9,10 +9,10 @@ static void free_all(t_data dat, t_philo *philos)
 	while (++i < dat.p_num)/*PROD*/
 	{
 		pthread_mutex_destroy(&dat.fork_mutex[i]);
-		pthread_mutex_destroy(dat.philos[i].last_eat.mutex_var);
+		pthread_mutex_destroy(&dat.philos[i].last_eat.mutex_var);
 	}
 	pthread_mutex_destroy(&dat.write_mutex);
-	pthread_mutex_destroy(dat.finish.mutex_var);
+	pthread_mutex_destroy(&dat.finish.mutex_var);
 	free(dat.fork_mutex);
 	if (NULL != philos)
 		free(philos);

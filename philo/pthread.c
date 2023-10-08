@@ -4,10 +4,10 @@
 
 static int	finish_eat(t_philo *philo)
 {
-	if (pthread_mutex_lock(philo->dat->finish.mutex_var))/*PROD*/
+	if (pthread_mutex_lock(&philo->dat->finish.mutex_var))/*PROD*/
 		return (errno);
 	philo->dat->finish.var += 1;/*PROD*/
-	return (pthread_mutex_unlock(philo->dat->finish.mutex_var));/*PROD*/
+	return (pthread_mutex_unlock(&philo->dat->finish.mutex_var));/*PROD*/
 }
 
 void	*pthread_handler(void *arg)
