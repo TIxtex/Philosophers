@@ -54,7 +54,7 @@ int			eat(t_philo *philo);
 long		time_diff(long start, long end);
 long		wait_time(long time_wait);
 long 		now_time(void);
-long		av(t_share v);
+long		av(t_share *v);
 void		mv(t_share *v, long value);
 
 #endif

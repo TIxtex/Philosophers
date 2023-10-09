@@ -7,7 +7,9 @@ static int	finish_eat(t_philo *philo)
 	if (pthread_mutex_lock(&philo->dat->finish.mutex_var))/*PROD*/
 		return (errno);
 	philo->dat->finish.var += 1;/*PROD*/
-	return (pthread_mutex_unlock(&philo->dat->finish.mutex_var));/*PROD*/
+	if (pthread_mutex_unlock(&philo->dat->finish.mutex_var))/*PROD*/
+		return (errno);
+	return (EXIT_SUCCESS);
 }
 
 void	*pthread_handler(void *arg)
@@ -26,6 +28,8 @@ void	*pthread_handler(void *arg)
 		if (thinking(philo))
 			return ((void *)EXIT_FAILURE);
 		i++;
+		if (av(&philo->dat->finish) >= philo->dat->p_num)/*PROD*/
+			break;
 	}
 	return (finish_eat(philo), NULL);
 }
@@ -33,14 +37,12 @@ void	*pthread_handler(void *arg)
 static int	post_patrol(t_philo *philos)
 {
 	register int	i;
-	void			*aux;
 
 	i = -1;
-	aux = NULL;
 	while (++i < philos->dat->p_num)
-		if (pthread_join(philos[i].philo, aux) || *(int *)aux)
+		if (pthread_join(philos[i].philo, NULL))
 			return (printf("%s %d\n", ERR_0, i), errno);
-	return (pthread_mutex_unlock(&philos->dat->write_mutex));
+	return (EXIT_SUCCESS);
 }
 
 int patrol(t_philo *philos)
@@ -50,21 +52,20 @@ int patrol(t_philo *philos)
 	i = -1;
 	while (++i < philos->dat->p_num)
 	{
-		if (philos->dat->time_to_death <= time_diff(av(&philos[i].last_eat), now_time()))/*PROD*/
-		{
-			if (pthread_mutex_lock(&philos->dat->write_mutex))
-				return (errno);
-			printf("%ld	-	%d %s\n", time_diff(philos->dat->i_time, now_time()), philos[i].philo_id, "is dead\nEND OF SIMULATION");
-			sleep (1);
-			break;
-		}
-		else if (av(&philos->dat->finish) == philos->dat->p_num)/*PROD*/
+		if (av(&philos->dat->finish) >= philos->dat->p_num)/*PROD*/
 		{
 			printf("%ld	-	%s\n", time_diff(philos->dat->i_time, now_time()), "all finish eat.\nEND OF SIMULATION");
-			return (post_patrol(philos));
+			break;
+		}
+		else if (philos->dat->time_to_death <= time_diff(av(&philos[i].last_eat), now_time()))/*PROD*/
+		{
+			mv(&philos->dat->finish, philos->dat->p_num);
+			usleep(5);
+			printf("%ld	-	%d %s\n", time_diff(philos->dat->i_time, now_time()), philos[i].philo_id, "is dead\nEND OF SIMULATION");
+			break;
 		}
 		if (i + 1 == philos->dat->p_num)
 			i = -1;
 	}
-	return (EXIT_SUCCESS);
+	return (post_patrol(philos));
 }

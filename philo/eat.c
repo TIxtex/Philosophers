@@ -66,8 +66,9 @@ int	eat(t_philo *philo)
 	
 	if (take_phase(philo))
 		return (errno);
+	mv(&philo->last_eat, now_time());
 	if (ft_write(philo, "is eating"))
 		return (errno);
-	mv(&philo->last_eat, wait_time(philo->dat->time_to_eat));/*PROD*/
+	wait_time(philo->dat->time_to_eat);/*PROD*/
 	return (leave_phase(philo));
 }

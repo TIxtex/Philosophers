@@ -35,7 +35,7 @@ t_philo	*thread_create(t_data *dat, t_philo *philos)
 		philos[i].dat = dat;
 		philos[i].last_eat.var = now_time();/*DANGER*/
 		if (pthread_mutex_init(&philos[i].last_eat.mutex_var, NULL))
-			exit(errno);
+			return (NULL);
 		if (pthread_create(&philos[i].philo,
 			NULL, &pthread_handler, (void *)&philos[i]))
 			return (NULL);
