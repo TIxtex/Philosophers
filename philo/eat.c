@@ -33,7 +33,6 @@ static int	take_phase(t_philo *philo)
 	}
 	else
 	{
-		usleep(64);
 		if (philo->philo_id == philo->dat->p_num)
 			return (take_forks(philo, philo->philo_id - 1, 0));
 		else
@@ -63,7 +62,6 @@ static int	leave_phase(t_philo *philo)
 
 int	eat(t_philo *philo)
 {
-	
 	if (take_phase(philo))
 		return (errno);
 	mv(&philo->last_eat, now_time());

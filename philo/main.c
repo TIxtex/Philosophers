@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/10 19:39:31 by uliherre          #+#    #+#             */
+/*   Updated: 2023/10/10 19:57:35 by uliherre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosofers.h"
 
-static void free_all(t_data dat, t_philo *philos)
+static void	free_all(t_data dat, t_philo *philos)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	sleep(1);
-	while (++i < dat.p_num)/*PROD*/
+	while (++i < dat.p_num)
 	{
 		pthread_mutex_destroy(&dat.fork_mutex[i]);
 		pthread_mutex_destroy(&dat.philos[i].last_eat.mutex_var);
@@ -36,7 +48,8 @@ static int	check_argv(char *argv)
 {
 	size_t	i;
 
-	if (10 < ft_strlen(argv))
+	i =  ft_strlen(argv);
+	if (10 < i || 0 == i || '0' == argv[0])
 		return (EXIT_FAILURE);
 	i = ZERO;
 	while (argv[i])
@@ -65,7 +78,7 @@ static int	check_arg(int argc, char **argv)
 	return (write(STDERR_FILENO, "Error ARGS\n", 11));
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	dat;
 	t_philo	*philos;

@@ -19,6 +19,8 @@ void	*pthread_handler(void *arg)
 
 	philo = (t_philo *)arg;
 	i = 0;
+	if (!(philo->philo_id % 2))
+		usleep(64);
 	while (-1 == philo->dat->must_eat || i++ < philo->dat->must_eat)
 	{
 		if (eat(philo))
@@ -27,9 +29,8 @@ void	*pthread_handler(void *arg)
 			return ((void *)EXIT_FAILURE);
 		if (thinking(philo))
 			return ((void *)EXIT_FAILURE);
-		i++;
-		if (av(&philo->dat->finish) >= philo->dat->p_num)/*PROD*/
-			break;
+		if (av(&philo->dat->finish) >= philo->dat->p_num)
+			break ;
 	}
 	return (finish_eat(philo), NULL);
 }
@@ -45,17 +46,18 @@ static int	post_patrol(t_philo *philos)
 	return (EXIT_SUCCESS);
 }
 
-int patrol(t_philo *philos)
+int	patrol(t_philo *philos)
 {
 	register int	i;
 
 	i = -1;
+
 	while (++i < philos->dat->p_num)
 	{
 		if (av(&philos->dat->finish) >= philos->dat->p_num)/*PROD*/
 		{
 			printf("%ld	-	%s\n", time_diff(philos->dat->i_time, now_time()), "all finish eat.\nEND OF SIMULATION");
-			break;
+			break ;
 		}
 		else if (philos->dat->time_to_death <= time_diff(av(&philos[i].last_eat), now_time()))/*PROD*/
 		{
