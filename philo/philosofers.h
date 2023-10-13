@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosofers.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/13 20:12:52 by uliherre          #+#    #+#             */
+/*   Updated: 2023/10/13 23:12:58 by uliherre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOFERS_H
 # define PHILOSOFERS_H
 # include <unistd.h>	/*write(), usleep()*/
@@ -9,9 +21,14 @@
 # include <limits.h>
 # include <errno.h>		/*errno*/
 
-#define ZERO 0
+# define ZERO 0
+# define ERR_0 "Error al hacer join al hilo o error en el hilo al hacer join"
+# define P0 "%ld	-	%s\n"
+# define P1 "%ld	-	%d %s\n"
+# define EE "all finish eat.\nEND OF SIMULATION"
+# define ED "is dead\nEND OF SIMULATION"
 
-struct s_data;
+struct	s_data;
 
 typedef struct s_share
 {
@@ -37,6 +54,7 @@ typedef struct s_data
 	int				must_eat;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	write_mutex;
+	pthread_mutex_t	start_mutex;
 	long			i_time;
 	t_philo			*philos;
 }	t_data;
@@ -53,7 +71,7 @@ int			ft_write(t_philo *philo, char *msg);
 int			eat(t_philo *philo);
 long		time_diff(long start, long end);
 long		wait_time(long time_wait);
-long 		now_time(void);
+long		now_time(void);
 long		av(t_share *v);
 void		mv(t_share *v, long value);
 

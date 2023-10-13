@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mutex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/13 20:12:59 by uliherre          #+#    #+#             */
+/*   Updated: 2023/10/13 21:49:07 by uliherre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosofers.h"
 
 int	mutex_create(t_data *dat)
@@ -14,6 +26,8 @@ int	mutex_create(t_data *dat)
 			return (errno);
 	if (pthread_mutex_init(&dat->write_mutex, NULL))
 		return (errno);
+	if (pthread_mutex_init(&dat->start_mutex, NULL))
+		return (errno);
 	if (pthread_mutex_init(&dat->finish.mutex_var, NULL))
 		return (errno);
 	return (EXIT_SUCCESS);
@@ -28,17 +42,21 @@ t_philo	*thread_create(t_data *dat, t_philo *philos)
 	if (NULL == philos)
 		return (NULL);
 	dat->philos = philos;
-	dat->i_time = now_time();
+	if (pthread_mutex_lock(&dat->start_mutex))
+		return (NULL);
 	while (++i < dat->p_num)
 	{
 		philos[i].philo_id = i + 1;
 		philos[i].dat = dat;
-		philos[i].last_eat.var = now_time();/*DANGER*/
 		if (pthread_mutex_init(&philos[i].last_eat.mutex_var, NULL))
 			return (NULL);
 		if (pthread_create(&philos[i].philo,
-			NULL, &pthread_handler, (void *)&philos[i]))
+				NULL, &pthread_handler, (void *)&philos[i]))
 			return (NULL);
 	}
+	usleep(100);
+	dat->i_time = now_time();
+	if (pthread_mutex_unlock(&dat->start_mutex))
+		return (NULL);
 	return (philos);
 }

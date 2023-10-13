@@ -6,7 +6,7 @@
 /*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 19:39:31 by uliherre          #+#    #+#             */
-/*   Updated: 2023/10/10 19:57:35 by uliherre         ###   ########.fr       */
+/*   Updated: 2023/10/13 20:40:57 by uliherre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	check_argv(char *argv)
 {
 	size_t	i;
 
-	i =  ft_strlen(argv);
+	i = ft_strlen(argv);
 	if (10 < i || 0 == i || '0' == argv[0])
 		return (EXIT_FAILURE);
 	i = ZERO;
@@ -91,6 +91,10 @@ int	main(int argc, char **argv)
 	philos = thread_create(&dat, philos);
 	if (NULL == philos)
 		return (free_all(dat, NULL), EXIT_FAILURE);
+	if (pthread_mutex_lock(&dat.start_mutex))
+		return (free_all(dat, philos), EXIT_FAILURE);
+	if (pthread_mutex_unlock(&dat.start_mutex))
+		return (free_all(dat, philos), EXIT_FAILURE);
 	if (patrol(philos))
 		return (free_all(dat, philos), EXIT_FAILURE);
 	return (free_all(dat, philos), EXIT_SUCCESS);

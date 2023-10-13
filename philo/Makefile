@@ -1,8 +1,20 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/10/13 20:13:02 by uliherre          #+#    #+#              #
+#    Updated: 2023/10/13 23:47:24 by uliherre         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pedantic #-fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -pedantic -g3 -fsanitize=thread
 THR = -lpthread
-DEBUG = -fsanitize=thread
+DEBUG = -fsanitize=thread -fsanitize=address
 
 INCLUDES = philosofers.h
 SOURCES = \
@@ -16,8 +28,7 @@ SOURCES = \
 	main.c
 OBJECTS = $(SOURCES:.c=.o)
 
-
-ARGS = 2 600 200 200 2
+ARGS = 199 1000 200 200 2
 
 .PHONY: all clean fclean f re run debug
 
@@ -25,7 +36,7 @@ $(NAME): $(OBJECTS) $(INCLUDES)
 	$(CC) $(CFLAGS) $(OBJECTS) $(THR) -o $(NAME)
 
 debug: $(OBJECTS) $(INCLUDES)
-	$(CC) $(CFLAGS) $(OBJECTS) $(THR) $(DEBUG) -o $(NAME)
+	$(CC) $(CFLAGS) $(DEBUG) $(OBJECTS) $(THR)  -o $(NAME)
 	
 all: $(NAME)
 clean:
