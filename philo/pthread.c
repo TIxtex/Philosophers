@@ -12,24 +12,19 @@
 
 #include "philosofers.h"
 
-static int	wall(t_philo *philo)
+static void	wall(t_philo *philo)
 {
-	if (pthread_mutex_lock(&philo->dat->start_mutex))
-		return (errno);
+	pthread_mutex_lock(&philo->dat->start_mutex);
 	mv(&philo->last_eat, now_time());
-	if (pthread_mutex_unlock(&philo->dat->start_mutex))
-		return (errno);
-	return (EXIT_SUCCESS);
+	pthread_mutex_unlock(&philo->dat->start_mutex);
 }
 
 static int	finish_eat(t_philo *philo)
 {
-	if (pthread_mutex_lock(&philo->dat->finish.mutex_var))
-		return (errno);
+	pthread_mutex_lock(&philo->dat->finish.mutex_var);
 	philo->dat->finish.var += 1;
-	if (pthread_mutex_unlock(&philo->dat->finish.mutex_var))
-		return (errno);
-	mv(&philo->last_eat, LONG_MAX);
+	pthread_mutex_unlock(&philo->dat->finish.mutex_var);
+	mv(&philo->last_eat, LONG_MAX);/*DANGER*/
 	return (EXIT_SUCCESS);
 }
 
@@ -40,18 +35,14 @@ void	*pthread_handler(void *arg)
 
 	philo = (t_philo *)arg;
 	i = 0;
-	if (wall(philo))
-		return (NULL);
+	wall(philo);
 	if (!(philo->philo_id % 2))
-		usleep(100);
+		wait_time(5);
 	while (-1 == philo->dat->must_eat || i++ < philo->dat->must_eat)
 	{
-		if (eat(philo))
-			return ((void *)EXIT_FAILURE);
-		if (slepping(philo))
-			return ((void *)EXIT_FAILURE);
-		if (thinking(philo))
-			return ((void *)EXIT_FAILURE);
+		eat(philo);
+		slepping(philo);
+		thinking(philo);
 		if (av(&philo->dat->finish) >= philo->dat->p_num)
 			break ;
 	}
@@ -75,23 +66,22 @@ int	patrol(t_philo *philos)
 	long			tmp;
 
 	i = -1;
-	sleep(1);
 	while (++i < philos->dat->p_num)
 	{
-		tmp = time_diff(av(&philos[i].last_eat), now_time());
+		tmp = now_time() - av(&philos[i].last_eat);
 		if (av(&philos->dat->finish) >= philos->dat->p_num)
 		{
-			printf(P0, time_diff(philos->dat->i_time, now_time()), EE);
+			printf(P0, now_time() - philos->dat->i_time, EE);
 			break ;
 		}
 		else if (philos->dat->time_to_death <= tmp && tmp < 100000)
 		{
 			mv(&philos->dat->finish, philos->dat->p_num);
-			usleep(100);
-			printf(P1, time_diff(philos->dat->i_time, now_time()),
-				philos[i].philo_id, ED);
+			wait_time(1);
+			printf(P1, now_time() - philos->dat->i_time, philos[i].philo_id, ED);
 			break ;
 		}
+		wait_time(1);
 		if (i + 1 == philos->dat->p_num)
 			i = -1;
 	}

@@ -14,10 +14,10 @@
 
 static void	free_all(t_data dat, t_philo *philos)
 {
-	int	i;
+	register int	i;
 
+	wait_time(1000);
 	i = -1;
-	sleep(1);
 	while (++i < dat.p_num)
 	{
 		pthread_mutex_destroy(&dat.fork_mutex[i]);
@@ -46,7 +46,7 @@ static void	asing_arg(t_data *dat, int argc, char **argv)
 
 static int	check_argv(char *argv)
 {
-	size_t	i;
+	register size_t	i;
 
 	i = ft_strlen(argv);
 	if (10 < i || 0 == i || '0' == argv[0])
@@ -75,7 +75,7 @@ static int	check_arg(int argc, char **argv)
 		;
 	else
 		return (EXIT_SUCCESS);
-	return (write(STDERR_FILENO, "Error ARGS\n", 11));
+	return (write(STDERR_FILENO, ERR_A, 11));
 }
 
 int	main(int argc, char **argv)
@@ -91,10 +91,7 @@ int	main(int argc, char **argv)
 	philos = thread_create(&dat, philos);
 	if (NULL == philos)
 		return (free_all(dat, NULL), EXIT_FAILURE);
-	if (pthread_mutex_lock(&dat.start_mutex))
-		return (free_all(dat, philos), EXIT_FAILURE);
-	if (pthread_mutex_unlock(&dat.start_mutex))
-		return (free_all(dat, philos), EXIT_FAILURE);
+	wait_time(dat.time_to_death);
 	if (patrol(philos))
 		return (free_all(dat, philos), EXIT_FAILURE);
 	return (free_all(dat, philos), EXIT_SUCCESS);

@@ -23,10 +23,15 @@
 
 # define ZERO 0
 # define ERR_0 "Error al hacer join al hilo o error en el hilo al hacer join"
-# define P0 "%ld	-	%s\n"
-# define P1 "%ld	-	%d %s\n"
-# define EE "all finish eat.\nEND OF SIMULATION"
-# define ED "is dead\nEND OF SIMULATION"
+# define ERR_A "Error ARGS\n"
+# define P0 "%ld %s\n"
+# define P1 "%ld %d %s\n"
+# define EE "all finish eat.\n"
+# define ED "died\n"
+# define MSG_0 "has taken a fork"
+# define MSG_1 "is eating"
+# define MSG_2 "is sleeping"
+# define MSG_3 "is thinking"
 
 struct	s_data;
 
@@ -38,10 +43,10 @@ typedef struct s_share
 
 typedef struct s_philo
 {
-	pthread_t		philo;
-	int				philo_id;
 	t_share			last_eat;
+	int				philo_id;
 	struct s_data	*dat;
+	pthread_t		philo;
 }	t_philo;
 
 typedef struct s_data
@@ -65,12 +70,11 @@ int			mutex_create(t_data *dat);
 t_philo		*thread_create(t_data *dat, t_philo *philos);
 void		*pthread_handler(void *arg);
 int			patrol(t_philo *philos);
-int			slepping(t_philo *philo);
-int			thinking(t_philo *philo);
-int			ft_write(t_philo *philo, char *msg);
-int			eat(t_philo *philo);
-long		time_diff(long start, long end);
-long		wait_time(long time_wait);
+void		slepping(t_philo *philo);
+void		thinking(t_philo *philo);
+void		ft_write(t_philo *philo, char *msg);
+void		eat(t_philo *philo);
+void		wait_time(long time_wait);
 long		now_time(void);
 long		av(t_share *v);
 void		mv(t_share *v, long value);

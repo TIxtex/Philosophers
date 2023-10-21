@@ -12,9 +12,9 @@
 
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pedantic -g3 -fsanitize=thread
+CFLAGS = -g3
 THR = -lpthread
-DEBUG = -fsanitize=thread -fsanitize=address
+DEBUG =  -fsanitize=thread
 
 INCLUDES = philosofers.h
 SOURCES = \
@@ -28,7 +28,7 @@ SOURCES = \
 	main.c
 OBJECTS = $(SOURCES:.c=.o)
 
-ARGS = 199 1000 200 200 2
+ARGS = 99 800 200 200 20 > log.log
 
 .PHONY: all clean fclean f re run debug
 

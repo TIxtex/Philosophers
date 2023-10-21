@@ -12,32 +12,22 @@
 
 #include "philosofers.h"
 
-int	ft_write(t_philo *philo, char *msg)
+void	ft_write(t_philo *philo, char *msg)
 {
-	long	tmp;
-
-	if (pthread_mutex_lock(&philo->dat->write_mutex))
-		return (errno);
-	if (av(&philo->dat->finish) >= philo->dat->p_num)
-		;
-	else
-	{
-		tmp = time_diff(philo->dat->i_time, now_time());
-		printf(P1, tmp, philo->philo_id, msg);
-	}
-	return (pthread_mutex_unlock(&philo->dat->write_mutex));
+	pthread_mutex_lock(&philo->dat->finish.mutex_var);
+	if (philo->dat->finish.var < philo->dat->p_num)
+		printf(P1, now_time() - philo->dat->i_time, philo->philo_id, msg);
+	pthread_mutex_unlock(&philo->dat->finish.mutex_var);
 }
 
-int	slepping(t_philo *philo)
+void	slepping(t_philo *philo)
 {
-	if (ft_write(philo, "is sleeping"))
-		return (errno);
-	if (-1 == wait_time(philo->dat->time_to_sleep))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	ft_write(philo, MSG_2);
+	wait_time(philo->dat->time_to_sleep);
 }
 
-int	thinking(t_philo *philo)
+void	thinking(t_philo *philo)
 {
-	return (ft_write(philo, "is thinking"));
+	ft_write(philo, MSG_3);
+	wait_time(5);
 }
