@@ -6,7 +6,7 @@
 /*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 19:39:31 by uliherre          #+#    #+#             */
-/*   Updated: 2023/10/13 20:40:57 by uliherre         ###   ########.fr       */
+/*   Updated: 2023/10/21 16:17:42 by uliherre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	free_all(t_data dat, t_philo *philos)
 {
 	register int	i;
 
-	wait_time(1000);
+	wait_time(100);
 	i = -1;
 	while (++i < dat.p_num)
 	{

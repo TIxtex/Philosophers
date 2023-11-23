@@ -6,15 +6,15 @@
 #    By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 20:13:02 by uliherre          #+#    #+#              #
-#    Updated: 2023/10/13 23:47:24 by uliherre         ###   ########.fr        #
+#    Updated: 2023/10/19 20:49:36 by uliherre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = gcc
-CFLAGS = -g3
+CFLAGS = -Wall -Wextra -Werror -pedantic -g3
 THR = -lpthread
-DEBUG =  -fsanitize=thread
+DEBUG = -fsanitize=thread -fsanitize=address
 
 INCLUDES = philosofers.h
 SOURCES = \
@@ -28,7 +28,7 @@ SOURCES = \
 	main.c
 OBJECTS = $(SOURCES:.c=.o)
 
-ARGS = 99 800 200 200 20 > log.log
+ARGS = 199 1000 200 200 2
 
 .PHONY: all clean fclean f re run debug
 

@@ -1,40 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/13 20:13:20 by uliherre          #+#    #+#             */
+/*   Updated: 2023/10/26 19:04:08 by uliherre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosofers.h"
 
-int	ft_write(t_philo *philo, char *msg)
+void	ft_write(t_philo *philo, char *msg)/*MOD*/
 {
-	if (sem_wait(philo->dat->write_sem))
-		return (errno);
-	if (philo->dat->finish == philo->dat->p_num)
-	{
-		if (sem_post(philo->dat->write_sem))
-			return(errno);
-		exit (EXIT_SUCCESS);
-	}
-	else
-		printf("%ld	-	%d %s\n", time_diff(philo->dat->i_time, now_time()), philo->philo, msg);
-	return (sem_post(philo->dat->write_sem));
+	pthread_mutex_lock(&philo->dat->finish.mutex_var);
+	if (philo->dat->finish.var < philo->dat->p_num)
+		printf(P, now_time() - philo->dat->i_time, philo->philo_id, msg);
+	pthread_mutex_unlock(&philo->dat->finish.mutex_var);
 }
 
-int	eat(t_philo *philo)
+void	slepping(t_philo *philo)
 {
-	
-	if (sem_wait(philo->dat->fork_sem))
-		return (errno);
-	if (ft_write(philo, "is eating"))
-		return (EXIT_FAILURE);
-	philo->last_eat = wait_time(philo->dat->time_to_eat);
-	return (sem_post(philo->dat->fork_sem));
-}
-
-int	slepping(t_philo *philo)
-{
-	if (ft_write(philo, "is sleeping"))
-		return (EXIT_FAILURE);
+	ft_write(philo, MSG_2);
 	wait_time(philo->dat->time_to_sleep);
-	return (EXIT_SUCCESS);
 }
 
-int	thinking(t_philo *philo)
+void	thinking(t_philo *philo)
 {
-	return (ft_write(philo, "is thinking"));
+	ft_write(philo, MSG_3);
+	wait_time(1);
 }

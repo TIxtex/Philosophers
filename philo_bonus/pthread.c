@@ -6,21 +6,21 @@
 /*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:11:51 by uliherre          #+#    #+#             */
-/*   Updated: 2023/10/21 16:29:47 by uliherre         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:03:16 by uliherre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosofers.h"
 #define UPS "Soy solo un filosofo, no tengo otro tenedor"
 
-static void	wall(t_philo *philo)
+static void	wall(t_philo *philo)/*MOD*/
 {
 	pthread_mutex_lock(&philo->dat->start_mutex);
 	mv(&philo->last_eat, now_time());
 	pthread_mutex_unlock(&philo->dat->start_mutex);
 }
 
-static int	finish_eat(t_philo *philo)
+static int	finish_eat(t_philo *philo)/*MOD*/
 {
 	pthread_mutex_lock(&philo->dat->finish.mutex_var);
 	philo->dat->finish.var += 1;
@@ -29,7 +29,7 @@ static int	finish_eat(t_philo *philo)
 	return (EXIT_SUCCESS);
 }
 
-void	*pthread_handler(void *arg)
+void	*pthread_handler(void *arg)/*MOD*/
 {
 	t_philo			*philo;
 	register int	i;
@@ -52,7 +52,7 @@ void	*pthread_handler(void *arg)
 	return (finish_eat(philo), NULL);
 }
 
-static int	post_patrol(t_philo *philos)
+static int	post_patrol(t_philo *philos)/*MOD*/
 {
 	register int	i;
 
@@ -63,7 +63,7 @@ static int	post_patrol(t_philo *philos)
 	return (EXIT_SUCCESS);
 }
 
-int	patrol(t_philo *philos)
+int	patrol(t_philo *philos)/*MOD*/
 {
 	register int	i;
 	long			tmp;

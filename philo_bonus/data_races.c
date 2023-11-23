@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   data_races.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 20:12:57 by uliherre          #+#    #+#             */
-/*   Updated: 2023/10/13 20:12:58 by uliherre         ###   ########.fr       */
+/*   Created: 2023/10/13 20:13:16 by uliherre          #+#    #+#             */
+/*   Updated: 2023/10/26 19:04:02 by uliherre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosofers.h"
 
-long	now_time(void)
+long	av(t_share *v)/*MOD*/
 {
-	struct timeval	time;
+	long	tmp;
 
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	pthread_mutex_lock(&v->mutex_var);
+	tmp = v->var;
+	pthread_mutex_unlock(&v->mutex_var);
+	return (tmp);
 }
 
-void	wait_time(long time_wait)
+void	mv(t_share *v, long value)/*MOD*/
 {
-	register long	time_init;
-
-	time_init = now_time();
-	while (time_wait > now_time() - time_init)
-		usleep(50);
+	pthread_mutex_lock(&v->mutex_var);
+	v->var = value;
+	pthread_mutex_unlock(&v->mutex_var);
 }

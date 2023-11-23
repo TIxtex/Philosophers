@@ -6,7 +6,7 @@
 /*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:12:52 by uliherre          #+#    #+#             */
-/*   Updated: 2023/10/13 23:12:58 by uliherre         ###   ########.fr       */
+/*   Updated: 2023/10/21 16:14:00 by uliherre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define ERR_0 "Error al hacer join al hilo o error en el hilo al hacer join"
 # define ERR_A "Error ARGS\n"
 # define P0 "%ld %s\n"
-# define P1 "%ld %d %s\n"
+# define P "%ld %d %s\n"
 # define EE "all finish eat.\n"
 # define ED "died\n"
 # define MSG_0 "has taken a fork"
