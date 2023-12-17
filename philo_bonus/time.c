@@ -28,3 +28,27 @@ void	wait_time(long time_wait)
 	while (time_wait > now_time() - time_init)
 		usleep(50);
 }
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	register char	*nw_str;
+	register char	*start;
+	size_t			len_1;
+	size_t			len_2;
+
+	if (NULL == s1 || NULL == s2)
+		return (NULL);
+	len_1 = ft_strlen((char *) s1);
+	len_2 = ft_strlen((char *) s2);
+	nw_str = (char *)malloc((len_1 + len_2 + 1) * sizeof(char));
+	start = nw_str;
+	if (NULL != nw_str)
+	{
+		while ('\0' != *s1)
+			*(nw_str++) = *(s1++);
+		while ('\0' != *s2)
+			*(nw_str++) = *(s2++);
+		*nw_str = '\0';
+	}
+	return (start);
+}

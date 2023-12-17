@@ -11,29 +11,28 @@
 /* ************************************************************************** */
 
 #include "philosofers.h"
+#define ERR_A "Error ARGS\n"
+#define ERR_PNUM "Need more than ONE philosofer\n"
 
-static void	free_all(t_data dat, t_philo *philos)/*MOD*/
+static void	free_all(t_data *dat, t_philo *philos)/*MOD*/
 {
-	register int	i;
-
 	wait_time(100);
-	i = -1;
-	while (++i < dat.p_num)
-	{
-		pthread_mutex_destroy(&dat.fork_mutex[i]);
-		pthread_mutex_destroy(&dat.philos[i].last_eat.mutex_var);
-	}
-	pthread_mutex_destroy(&dat.write_mutex);
-	pthread_mutex_destroy(&dat.finish.mutex_var);
-	free(dat.fork_mutex);
+	semaphore_uncreate(dat->forks, "/forks");
+	semaphore_uncreate(dat->write_sem, "/write");
+	semaphore_uncreate(dat->start_sem, "/start");
+	semaphore_uncreate(dat->finish->sem_var, "/finish");
 	if (NULL != philos)
+	{
 		free(philos);
+		philos = NULL;
+	}
 }
 
 static void	asing_arg(t_data *dat, int argc, char **argv)
 {
-	dat->finish.var = ZERO;
 	dat->p_num = (int)ft_atoi(argv[1]);
+	if (2 > dat->p_num)
+		ft_error(ERR_PNUM, 83);
 	dat->time_to_death = (int)ft_atoi(argv[2]);
 	dat->time_to_eat = (int)ft_atoi(argv[3]);
 	dat->time_to_sleep = (int)ft_atoi(argv[4]);
@@ -41,7 +40,9 @@ static void	asing_arg(t_data *dat, int argc, char **argv)
 		dat->must_eat = (int)ft_atoi(argv[5]);
 	else
 		dat->must_eat = -1;
-	dat->fork_mutex = NULL;
+	dat->forks = NULL;
+	dat->write_sem = NULL;
+	dat->start_sem = NULL;
 }
 
 static int	check_argv(char *argv)
@@ -86,13 +87,11 @@ int	main(int argc, char **argv)/*MOD*/
 	philos = NULL;
 	if (check_arg(argc, argv))
 		return (EXIT_FAILURE);
-	if (asing_arg(&dat, argc, argv), mutex_create(&dat))
+	if (asing_arg(&dat, argc, argv), semaphore_create(&dat, philos))
 		return (errno);
-	philos = thread_create(&dat, philos);
-	if (NULL == philos)
-		return (free_all(dat, NULL), EXIT_FAILURE);
+	philos = philos_create(&dat, philos);
 	wait_time(dat.time_to_death);
-	if (patrol(philos))
-		return (free_all(dat, philos), EXIT_FAILURE);
-	return (free_all(dat, philos), EXIT_SUCCESS);
+	if (NULL == philos)
+		return (free_all(&dat, NULL), EXIT_FAILURE);
+	return (free_all(&dat, philos), EXIT_SUCCESS);
 }

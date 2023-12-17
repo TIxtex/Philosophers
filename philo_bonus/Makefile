@@ -12,32 +12,29 @@
 
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pedantic -g3
-THR = -lpthread
-DEBUG = -fsanitize=thread -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -pedantic
+#LDFLAGS = -lpthread
+#DEBUG = -fsanitize=thread -fsanitize=address
 
-INCLUDES = philosofers.h
+INCLUDE = philosofers.h
 SOURCES = \
-	libft.c \
-	time.c \
-	mutex.c \
-	pthread.c \
 	actions.c \
-	eat.c \
 	data_races.c \
-	main.c
+	libft.c \
+	main.c \
+	philos.c \
+	semaphore.c \
+	time.c
+
 OBJECTS = $(SOURCES:.c=.o)
 
-ARGS = 199 1000 200 200 2
+ARGS = 2 1000 200 200 3
 
-.PHONY: all clean fclean f re run debug
+.PHONY: all clean fclean f re run
 
-$(NAME): $(OBJECTS) $(INCLUDES)
-	$(CC) $(CFLAGS) $(OBJECTS) $(THR) -o $(NAME)
+$(NAME): $(OBJECTS) $(INCLUDE)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
 
-debug: $(OBJECTS) $(INCLUDES)
-	$(CC) $(CFLAGS) $(DEBUG) $(OBJECTS) $(THR)  -o $(NAME)
-	
 all: $(NAME)
 clean:
 	/bin/rm -rf $(OBJECTS)

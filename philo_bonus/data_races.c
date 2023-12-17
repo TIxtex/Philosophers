@@ -12,19 +12,23 @@
 
 #include "philosofers.h"
 
-long	av(t_share *v)/*MOD*/
+long	av(t_share *v)
 {
 	long	tmp;
 
-	pthread_mutex_lock(&v->mutex_var);
+	if (sem_wait(v->sem_var))
+		exit (-11);
 	tmp = v->var;
-	pthread_mutex_unlock(&v->mutex_var);
+	if (sem_post(v->sem_var))
+		exit (-11);
 	return (tmp);
 }
 
-void	mv(t_share *v, long value)/*MOD*/
+void	mv(t_share *v, long value)
 {
-	pthread_mutex_lock(&v->mutex_var);
+	if (sem_wait(v->sem_var))
+		exit (-11);
 	v->var = value;
-	pthread_mutex_unlock(&v->mutex_var);
+	if (sem_post(v->sem_var))
+		exit (-11);
 }

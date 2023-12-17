@@ -1,30 +1,32 @@
 #include "philosofers.h"
 
-#define ERR_0 "Error al hacer kill al proceso"
+#define ERR_K "Error al hacer kill al proceso"
+
+static void	wall(t_philo *philo)/*MOD*/
+{
+	sem_wait(philo->dat->start_sem);
+	sem_post(philo->dat->start_sem);
+}
 
 static int	finish_eat(t_philo *philo)
 {
-	if (sem_wait(philo->dat->finish_sem))
+	if (sem_wait(philo->dat->finish->sem_var))
 		return (EXIT_FAILURE);
-	philo->dat->finish += 1;
-	return (sem_post(philo->dat->finish_sem));
+	philo->dat->finish->var += 1;
+	return (sem_post(philo->dat->finish->sem_var));
 }
 
-void	*philo_handler(void *arg)
+void	*philo_handler(t_philo *philo)
 {
-	t_philo		*philo;
 	int			i;
 
-	philo = (t_philo *)arg;
 	i = 0;
+	wall(philo);
 	while (-1 == philo->dat->must_eat || i++ < philo->dat->must_eat)
 	{
-		if (eat(philo))
-			return ((void *)EXIT_FAILURE);
-		if (slepping(philo))
-			return ((void *)EXIT_FAILURE);
-		if (thinking(philo))
-			return ((void *)EXIT_FAILURE);
+		eat(philo);
+		slepping(philo);
+		thinking(philo);
 		i++;
 	}
 	return (finish_eat(philo), NULL);
@@ -37,32 +39,34 @@ static int	post_patrol(t_philo *philos)
 	i = -1;
 	while (++i < philos->dat->p_num)
 		if (kill(philos[i].philo, SIGTERM))
-			return (printf("%s %d\n", ERR_0, i));
+			return (printf("%s %d\n", ERR_K, i));
 	return (sem_post(philos->dat->write_sem));
 }
 
 int	patrol(t_philo *philos)
 {
-	int	i;
+	register int	i;
+	long			tmp;
 
 	i = -1;
-	while (++i < philos->dat->p_num)
+	while (++i < philos->dat->p_num && 1 != philos->dat->p_num)
 	{
-		if (philos->dat->time_to_death <= time_diff(philos[i].last_eat , now_time()))
+		tmp = now_time() - av(philos[i].last_eat);
+		if (av(philos->dat->finish) >= philos->dat->p_num)
 		{
-			if (sem_wait(philos->dat->write_sem))
-				return (EXIT_FAILURE);
-			printf("%ld	-	%d %s\n", time_diff(philos->dat->i_time, now_time()), philos[i].philo, "is dead\nEND OF SIMULATION");
-			sleep (1);
-			break;
+			printf(P0, now_time() - philos->dat->i_time, EE);
+			break ;
 		}
-		else if (philos->dat->finish == philos->dat->p_num)
+		else if (philos->dat->time_to_death <= tmp && tmp < 100000)
 		{
-			printf("%ld	-	%s\n", time_diff(philos->dat->i_time, now_time()), "all finish eat.\nEND OF SIMULATION");
-			return (post_patrol(philos));
+			mv(philos->dat->finish, philos->dat->p_num);
+			wait_time(1);
+			printf(P, now_time() - philos->dat->i_time, philos[i].philo_id, ED);
+			break ;
 		}
+		wait_time(1);
 		if (i + 1 == philos->dat->p_num)
 			i = -1;
 	}
-	return (EXIT_SUCCESS);
+	return (post_patrol(philos));
 }
