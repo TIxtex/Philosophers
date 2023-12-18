@@ -12,56 +12,15 @@
 
 #include "philosofers.h"
 
-static int get_length(long n)
+size_t	ft_strlen(char *str)
 {
-    int length = 0;
-    
-    if (n == 0)
-        return (1);
-    if (n < 0)
-	{
-		n = -n;
-		length++;
-	}
-	while (n != 0)
-	{
-		n /= 10;
-		length++;
-	}
-	return (length);
-}
+	size_t	i;
 
-char *ft_itoa(long n)
-{
-	register int	i;
-	int				length;
-	char			*result;
-	
-	length = get_length(n);
-	if (n < 0)
-		length++;
-	result = (char *) malloc((length + 1) * sizeof(char));
-	if (NULL == result)
-		return (NULL);
-	if (n < 0)
-	{
-		result[0] = '-';
-		n = -n;
-	}
-	i = length - 1;
-	while (i-- >= 0)
-	{
-		result[i] = '0' + (n % 10);
-		n /= 10;
-	}
-	result[length] = '\0';
-	return (result);
-}
-
-void	ft_error(const char *errstr, int errnum)
-{
-	write (STDERR_FILENO, errstr, sizeof(errstr));
-	exit (errnum);
+	i = 0;
+	if (str)
+		while (str[i])
+			i++;
+	return (i);
 }
 
 long	ft_atoi(const char *str)
@@ -79,15 +38,4 @@ long	ft_atoi(const char *str)
 	while ((unsigned)*str - '0' < 10)
 		returned = (returned * 10) + (*(str++) - 48);
 	return (returned * nbr_of_neg);
-}
-
-size_t	ft_strlen(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	if (str)
-		while (str[i])
-			i++;
-	return (i);
 }

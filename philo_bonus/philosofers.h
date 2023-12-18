@@ -17,13 +17,15 @@
 # include <stdlib.h>	/*malloc()*/
 # include <string.h>	/*memset()*/
 # include <sys/time.h>	/*gettimeofday()*/
+# include <sys/wait.h>	/*waitpid()*/
 # include <pthread.h>	/*pthread()*/
-# include <signal.h>
+# include <signal.h>	/*kill()*/
 # include <limits.h>
 # include <errno.h>		/*errno*/
-# include <semaphore.h>
-# include <fcntl.h>		/* For O_* constants */
-# include <sys/stat.h>	/* For mode constants */
+# include <semaphore.h>	/*sem_*()*/
+# include <fcntl.h>		/*sem O_* constants */
+# include <sys/stat.h>	/*sem mode constants */
+
 # define ZERO 0
 # define P0 "%ld %s\n"
 # define P "%ld %d %s\n"
@@ -34,56 +36,29 @@
 # define MSG_2 "is sleeping"
 # define MSG_3 "is thinking"
 
-struct	s_data;
-
-typedef struct s_share
-{
-	sem_t			*sem_var;
-	long			var;
-}	t_share;
-
-typedef struct s_philo
-{
-	t_share			*last_eat;
-	int				philo_id;
-	pid_t			philo;
-	struct s_data	*dat;
-}	t_philo;
-
 typedef struct s_data
 {
-	t_share			*finish;
-	int				p_num;
-	int				time_to_death;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				must_eat;
-	sem_t			*forks;
-	sem_t			*write_sem;
-	sem_t			*start_sem;
-	long			i_time;
-	t_philo			*philos;
+	long	last_eat;
+	long	i_time;
+	int		philo_id;
+	pid_t	*pids;
+	int		p_num;
+	int		time_to_death;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		must_eat;
+	sem_t	*forks;
+	sem_t	*wall;
 }	t_data;
 
-void		ft_error(const char *errstr, int errnum);
-long		ft_atoi(const char *str);
-char		*ft_itoa(long n);
-size_t		ft_strlen(char *str);
-char		*ft_strjoin(char const *s1, char const *s2);
-int			semaphore_create(t_data *d, t_philo *philos);
-void		semaphore_uncreate(sem_t *semaphore, const char *semaphore_name);
-t_philo 	*philos_create(t_data *dat, t_philo *philos);
-void		*philo_handler(t_philo *philo);
-int			patrol(t_philo *philos);
-void		slepping(t_philo *philo);
-void		thinking(t_philo *philo);
-void		ft_write_p(t_philo *philo, char *msg);
-void		eat(t_philo *philo);
-void		wait_time(long time_wait);
-long		now_time(void);
 
-/** Wrapers **/
-long		av(t_share *v);
-void		mv(t_share *v, long value);
+int		core(t_data *dat);	/* proces.c */
+void	wall(t_data *dat);
+void	ft_write_p(t_data *dat, char *msg);	/* actions.c */
+void	eat(t_data *dat);					/**/
+void	wait_time(long time_wait);
+long	now_time(void);
+long	ft_atoi(const char *str);	/* libft.c */
+size_t	ft_strlen(char *str);		/**/
 
 #endif
