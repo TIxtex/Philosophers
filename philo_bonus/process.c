@@ -24,17 +24,14 @@ static int	patrol(t_data *dat)
 	while (count != dat->p_num)
 	{
 		i = waitpid(-1, &status, 0);
-		if (0 > i)
-			return (EXIT_FAILURE);
-		if (EXIT_FAILURE == WEXITSTATUS(status))
+		if (0 > i || EXIT_FAILURE == WEXITSTATUS(status))
 			return (EXIT_FAILURE);
 		if (EXIT_SUCCESS == WEXITSTATUS(status))
 			count++;
 		else if (42 == WEXITSTATUS(status))
 			return (post_patrol(dat), 42);
 	}
-	printf(P0, now_time() - dat->i_time, EE);
-	return (EXIT_SUCCESS);
+	return (printf(P0, now_time() - dat->i_time, EE), EXIT_SUCCESS);
 }
 
 static int	philo_handler(t_data *dat)
@@ -44,7 +41,7 @@ static int	philo_handler(t_data *dat)
 	i = 0;
 	wall(dat);
 	dat->i_time = now_time();
-	dat->last_eat = now_time();
+	dat->last_eat = dat->i_time;
 	while (-1 == dat->must_eat || i++ < dat->must_eat)
 	{
 		eat(dat);
@@ -52,10 +49,8 @@ static int	philo_handler(t_data *dat)
 		wait_time(dat->time_to_sleep);
 		ft_write_p(dat, MSG_3);
 		wait_time(2);
-		i++;
 	}
-	free(dat->pids);
-	return (EXIT_SUCCESS);
+	return (free(dat->pids), EXIT_SUCCESS);
 }
 
 int	core(t_data *dat)

@@ -53,9 +53,9 @@ typedef struct s_data
 
 
 int		core(t_data *dat);	/* proces.c */
-void	wall(t_data *dat);
 void	ft_write_p(t_data *dat, char *msg);	/* actions.c */
 void	eat(t_data *dat);					/**/
+void	wall(t_data *dat);
 void	wait_time(long time_wait);
 long	now_time(void);
 long	ft_atoi(const char *str);	/* libft.c */

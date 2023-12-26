@@ -15,15 +15,9 @@
 void	wall(t_data *dat)
 {
 	if (sem_wait(dat->wall))
-	{
-		free(dat->pids);
-		exit (EXIT_FAILURE);
-	}
+		exit ((free(dat->pids), EXIT_FAILURE));
 	if (sem_post(dat->wall))
-	{
-		free(dat->pids);
-		exit (EXIT_FAILURE);
-	}
+		exit ((free(dat->pids), EXIT_FAILURE));
 }
 
 long	now_time(void)
@@ -53,25 +47,18 @@ void	ft_write_p(t_data *dat, char *msg)
 	else
 	{	
 		printf(P, now_time() - dat->i_time, dat->philo_id, "dead");
-		free(dat->pids);
-		exit (42);
+		exit ((free(dat->pids), 42));
 	}
 }
 
 void	eat(t_data *dat)
 {
 	if (sem_wait(dat->forks))
-	{
-		free(dat->pids);
-		exit (EXIT_FAILURE);
-	}
+		exit ((free(dat->pids), EXIT_FAILURE));
 	ft_write_p(dat, MSG_0);
 	ft_write_p(dat, MSG_1);
 	dat->last_eat = now_time();
 	wait_time(dat->time_to_eat);
 	if (sem_post(dat->forks))
-	{
-		free(dat->pids);
-		exit (EXIT_FAILURE);
-	}
+		exit ((free(dat->pids), EXIT_FAILURE));
 }
