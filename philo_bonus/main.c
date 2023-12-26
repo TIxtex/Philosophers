@@ -6,7 +6,7 @@
 /*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 19:39:31 by uliherre          #+#    #+#             */
-/*   Updated: 2023/10/26 19:02:56 by uliherre         ###   ########.fr       */
+/*   Updated: 2023/12/26 12:50:25 by uliherre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	ft_idempotence(t_data *dat)
 	sem_unlink(WALL_SEM);
 }
 
-int	main(int argc, char **argv)/*MOD*/
+int	main(int argc, char **argv)
 {
 	t_data	dat;
 	int		result;

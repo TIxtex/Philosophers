@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/26 12:50:59 by uliherre          #+#    #+#             */
+/*   Updated: 2023/12/26 12:51:20 by uliherre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosofers.h"
 
 #define ERR_K "Error al hacer kill al proceso"
@@ -62,7 +74,7 @@ int	core(t_data *dat)
 	{
 		dat->pids[i] = fork();
 		if (0 > dat->pids[i])
-			return(EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		else if (dat->pids[i] == 0)
 		{
 			dat->philo_id = i;

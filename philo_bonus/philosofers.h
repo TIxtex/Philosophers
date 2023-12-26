@@ -6,7 +6,7 @@
 /*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:12:52 by uliherre          #+#    #+#             */
-/*   Updated: 2023/10/26 19:40:45 by uliherre         ###   ########.fr       */
+/*   Updated: 2023/12/26 12:50:47 by uliherre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_data
 	sem_t	*forks;
 	sem_t	*wall;
 }	t_data;
-
 
 int		core(t_data *dat);	/* proces.c */
 void	ft_write_p(t_data *dat, char *msg);	/* actions.c */

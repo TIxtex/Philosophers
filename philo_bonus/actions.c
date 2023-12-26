@@ -6,7 +6,7 @@
 /*   By: uliherre <uliherre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:13:20 by uliherre          #+#    #+#             */
-/*   Updated: 2023/10/26 19:04:08 by uliherre         ###   ########.fr       */
+/*   Updated: 2023/12/26 12:50:14 by uliherre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_write_p(t_data *dat, char *msg)
 	if (dat->time_to_death > aux)
 		printf(P, now_time() - dat->i_time, dat->philo_id, msg);
 	else
-	{	
+	{
 		printf(P, now_time() - dat->i_time, dat->philo_id, "dead");
 		exit ((free(dat->pids), 42));
 	}
